@@ -1,11 +1,12 @@
 import React from 'react'
+import UserDashboardPage from '../components/UserDashboard/UserDashboard'
 
-const UserDashboardPage = () => {
+const UserDashboard = () => {
     return (
         <div>
-            user dashboard page
+            <UserDashboardPage />
         </div>
     )
 }
 
-export default UserDashboardPage
+export default UserDashboard
