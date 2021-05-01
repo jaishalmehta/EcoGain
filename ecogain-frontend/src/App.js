@@ -8,14 +8,14 @@ import LeaderBoardPage from './pages/LeaderBoardPage';
 
 function App() {
   return (
-    
+
     <div className="App">
-      <Switch> 
-        <Route exact path="/" component={LoginPage} exact />
-        <Route path="/registerpage" component={RegisterPage}/>
-        <Route path="/userdashboardpage" component={UserDashboardPage}/>
-        <Route path="/userprofilepage" component={UserProfilePage}/> 
-        <Route path="/leaderboardpage" component={LeaderBoardPage}/>
+      <Switch>
+        <Route path="/" component={LoginPage} exact />
+        <Route path="/registerpage" component={RegisterPage} />
+        <Route path="/userdashboardpage" component={UserDashboardPage} />
+        <Route path="/userprofilepage" component={UserProfilePage} />
+        <Route path="/leaderboardpage" component={LeaderBoardPage} />
       </Switch>
     </div>
   );
