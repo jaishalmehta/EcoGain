@@ -5,8 +5,17 @@
 } */
 
 .row {
-  padding: 10px 0;
+  padding: 20px 10px 20px 10px;
+  position:relative;
 
+ }
+
+ .IconBtn {
+   background: #fff;
+   border-radius: 20px;
+   border-color: #f1f2f5;
+   box-shadow: 5px 5px  #ced0d4;
+  
  }
 /*
 #components-layout-trigger .trigger {
