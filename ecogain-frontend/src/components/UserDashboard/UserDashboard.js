@@ -1,7 +1,7 @@
 import React from 'react';
 import './UserDashboard.css';
-import { Layout, Avatar, Menu, Progress, Row, Col, Popover } from 'antd';
-import { UserOutlined, MenuOutlined, MenuUnfoldOutlined, MenuFoldOutlined, MailOutlined, SettingOutlined, AppstoreOutlined, StarTwoTone } from '@ant-design/icons';
+import { Layout, Avatar, Menu, Progress, Row, Col, Dropdown, Button } from 'antd';
+import { MenuOutlined, MenuUnfoldOutlined, MenuFoldOutlined, MailOutlined, SettingOutlined, AppstoreOutlined, StarTwoTone } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import transportation from '../Images/transportation.svg';
@@ -15,6 +15,29 @@ import reduce from '../Images/reduce.svg';
 import tshirt from '../Images/tshirt.svg';
 import reuse from '../Images/reuse.svg';
 const { Header, Footer, Sider, Content } = Layout;
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+        1st menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+        2nd menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+        3rd menu item
+      </a>
+    </Menu.Item>
+  </Menu>
+);
+
+// myfunction() {
+//   console.log("CLICKED");
+// }
 
 class App extends React.Component {
   state = {
@@ -37,10 +60,7 @@ class App extends React.Component {
               <Title style={{ color: 'white' }} level={2}>
                 <h1 style={{ color: 'white', alignItems: "center" }}>
                   EcoGain
-                   {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                  className: 'trigger',
-                  onClick: this.toggle
-                })}</h1>
+                </h1>
               </Title>
             </Header>
 
@@ -82,10 +102,14 @@ class App extends React.Component {
           </Layout>
 
           <Sider trigger={null} collapsible collapsed={this.state.collapsed} style={{ background: '#fff' }}>
+
             <Menu defaultSelectedKeys={['Dashboard']} mode="inline">
-              <Menu.Item key='Dashboard'>
-                Categories
-              <Avatar style={{ backgroundColor: '#52BC3D', float: 'right' }} icon={<UserOutlined />} />
+              <Menu.Item key='Dashboard' >
+                {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                  className: 'trigger',
+                  onClick: this.toggle
+                })}
+                <SubMenu key="sub1" icon={<MailOutlined />} title="Menu Bar" />
               </Menu.Item>
               <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
                 <Menu.Item key="1">Option 1</Menu.Item>
@@ -95,10 +119,6 @@ class App extends React.Component {
               <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Navigation Two">
                 <Menu.Item key="5">Option 5</Menu.Item>
                 <Menu.Item key="6">Option 6</Menu.Item>
-                <SubMenu key="sub3" title="Submenu">
-                  <Menu.Item key="7">Option 7</Menu.Item>
-                  <Menu.Item key="8">Option 8</Menu.Item>
-                </SubMenu>
               </SubMenu>
               <SubMenu key="sub4" icon={<SettingOutlined />} title="Navigation Three">
                 <Menu.Item key="9">Option 9</Menu.Item>
