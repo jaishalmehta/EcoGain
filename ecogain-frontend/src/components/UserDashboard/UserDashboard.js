@@ -4,6 +4,8 @@ import { Layout, Avatar, Menu, Progress, Row, Col, Divider } from 'antd';
 import { UserOutlined, MenuOutlined, MailOutlined, SettingOutlined, AppstoreOutlined, StarTwoTone } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
+import transportation from '../Images/transportation.svg';
+import harvest from '../Images/harvest.svg';
 const { Header, Footer, Sider, Content } = Layout;
 
 
@@ -13,7 +15,7 @@ function App() {
     <div className="App">
       <Layout>
         <Layout>
-          <Header style={{ padding: 13, backgroundColor: '#0478BC' }} >
+          <Header style={{ padding: 13, backgroundColor: '#449BCD' }} >
             <Title style={{ color: 'white' }} level={2}>EcoGain <MenuOutlined style={{ float: 'right' }} />
             </Title>
           </Header>
@@ -27,10 +29,16 @@ function App() {
               </div>
               <div>
                 <Row justify="space-around">
-                  <Col span={4}>col-4</Col>
-                  <Col span={4}>col-4</Col>
-                  <Col span={4}>col-4</Col>
-                  <Col span={4}>col-4</Col>
+                  <Col span={4} ><img src={transportation} alt="transportation" /></Col>
+                  <Col span={4} ><img src={harvest} alt="harvest" /></Col>
+                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
+                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
+                </Row>
+                <Row justify="space-around">
+                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
+                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
+                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
+                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
                 </Row>
               </div>
             </div>
