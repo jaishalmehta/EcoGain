@@ -8,6 +8,7 @@ from flask_cors import CORS
 
 
 
+
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./data/ecogain.sqlite'
@@ -16,7 +17,7 @@ app.config['SECRET_KEY'] = 'string'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from models import User
+from models import User, Activity
 
 @app.route('/')
 def hello_world():
@@ -115,3 +116,7 @@ def login():
 
     # if pword incorrect
     return make_response('could not verify', 401, {'WWW-Authenticate': 'Basic realm= "Login required!"'})
+
+@app.route('/userdashboard',  methods=['GET', 'POST'])
+def pick_activity():
+    activity = Activity.query.filter(Activity.description).all()
