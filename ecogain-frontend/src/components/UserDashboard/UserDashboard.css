@@ -7,24 +7,32 @@
 .row {
   padding: 10px 0;
 
+ }
+/*
+#components-layout-trigger .trigger {
+  padding: 0 24px;
+  font-size: 18px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
-/* 
-.App-logo {
-    height: 40vmin;
-  }
-  
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-  
-  .App-link {
-    color: #09d3ac;
-  } */
+#components-layout-trigger .trigger:hover {
+  color: #1890ff;
+}
+
+#components-layout-trigger .logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
+}
+*/
+.site-layout .site-layout-background {
+  background: #fff;
+  padding: 30px 30px 30px 30px;
+}
+
+/* .MenuUnfoldOutlined {
+  align-items: right;
+}  */
+
