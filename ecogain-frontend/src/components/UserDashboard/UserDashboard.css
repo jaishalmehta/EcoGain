@@ -4,6 +4,10 @@
     text-align: center;
 }
 
+.row {
+  padding: 10px 0;
+
+}
 
 /* 
 .App-logo {

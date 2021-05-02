@@ -6,6 +6,14 @@ import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import transportation from '../Images/transportation.svg';
 import harvest from '../Images/harvest.svg';
+import animals from '../Images/animals.svg';
+import energy from '../Images/energy.svg';
+import other from '../Images/other.svg';
+import plants from '../Images/plants.svg';
+import recycle from '../Images/recycle.svg';
+import reduce from '../Images/reduce.svg';
+import tshirt from '../Images/tshirt.svg';
+import reuse from '../Images/reuse.svg';
 const { Header, Footer, Sider, Content } = Layout;
 
 
@@ -28,17 +36,27 @@ function App() {
                 <StarTwoTone spin style={{ float: 'left', fontSize: '30px' }} /> <Progress percent={55} status="active" />
               </div>
               <div>
-                <Row justify="space-around">
+                <Row justify="space-around" className="row">
                   <Col span={4} ><img src={transportation} alt="transportation" /></Col>
                   <Col span={4} ><img src={harvest} alt="harvest" /></Col>
-                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
-                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
+                  <Col span={4} ><img src={animals} alt="animals" /></Col>
+                  <Col span={4} ><img src={tshirt} alt="tshirt" /></Col>
                 </Row>
-                <Row justify="space-around">
-                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
-                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
-                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
-                  <Col span={4} ><MenuOutlined style={{ float: 'center' }} /></Col>
+
+                <Row justify="space-around" className="row">
+                  <Col span={4} ><img src={reduce} alt="reduce" /></Col>
+                  <Col span={4} ><img src={reuse} alt="reuse" /></Col>
+                  <Col span={4} ><img src={recycle} alt="recycle" /></Col>
+                  <Col span={4} ><img src={energy} alt="energy" /></Col>
+
+                </Row>
+
+                <Row justify="space-around" className="row">
+                  <Col span={4} ><img src={plants} alt="plants" /></Col>
+                  <Col span={4} ><img src={other} alt="other" /></Col>
+                  <Col span={4} ></Col>
+                  <Col span={4} ></Col>
+
                 </Row>
               </div>
             </div>
