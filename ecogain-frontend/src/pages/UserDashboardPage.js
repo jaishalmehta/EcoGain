@@ -1,12 +1,12 @@
 import React from 'react'
-import UserDashboardPage from '../components/UserDashboard/UserDashboard'
+import UserDashboard from '../components/UserDashboard/UserDashboard'
 
-const UserDashboard = () => {
+const UserDashboardPage = () => {
     return (
         <div>
-            <UserDashboardPage />
+            <UserDashboard />
         </div>
     )
 }
 
-export default UserDashboard
+export default UserDashboardPage
