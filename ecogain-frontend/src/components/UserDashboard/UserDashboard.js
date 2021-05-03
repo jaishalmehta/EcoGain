@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from "react-router-dom";
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './UserDashboard.css';
 import { Layout, Menu, Progress, Row, Col, } from 'antd';
 import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled } from '@ant-design/icons';
@@ -130,7 +132,8 @@ class App extends React.Component {
                 </SubMenu>
 
                 <SubMenu key="Logout" icon={<LogoutOutlined />} title="Logout">
-                  <Menu.Item key="LogoutButton">Logout <Link to="/" /> </Menu.Item>
+                  <Menu.Item key="LogoutButton">Logout </Menu.Item>
+
                 </SubMenu>
 
               </Menu>

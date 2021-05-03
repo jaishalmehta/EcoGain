@@ -1,11 +1,56 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import './Leaderboard.css';
-import { Layout, Menu, Progress } from 'antd';
+import { Layout, Menu, Table } from 'antd';
 import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
 const { Header, Footer, Sider, Content } = Layout;
+
+
+const columns = [
+    {
+        title: 'Username',
+        dataIndex: 'Username',
+    },
+
+    {
+        title: 'Score',
+        dataIndex: 'Score',
+        sorter: {
+            compare: (a, b) => a.Score - b.Score,
+            multiple: 1,
+        },
+    },
+];
+
+const data = [
+    {
+        key: '1',
+        Username: 'John Brown',
+        Score: 70,
+    },
+    {
+        key: '2',
+        Username: 'Jim Green',
+        Score: 89,
+    },
+    {
+        key: '3',
+        Username: 'Joe Black',
+        Score: 7,
+    },
+    {
+        key: '4',
+        Username: 'Jim Red',
+        Score: 9,
+    },
+];
+
+function onChange(pagination, filters, sorter, extra) {
+    console.log('params', pagination, filters, sorter, extra);
+}
+
 
 class App extends React.Component {
     state = {
@@ -37,7 +82,8 @@ class App extends React.Component {
 
                                 <div className="site-layout-background" style={{ minHeight: 380 }}>
                                     <div >
-                                        <h1>This week's top contributers</h1>
+                                        <h1 style={{ color: '#449BCD', fontSize: '30px', textAlign: 'center' }}>Top Contributers</h1>
+                                        <Table columns={columns} dataSource={data} onChange={onChange} />
                                     </div>
                                 </div>
                             </Content>
