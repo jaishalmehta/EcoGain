@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import jwt 
 import datetime
 from flask_cors import CORS
+from functools import wraps
 
 
 
@@ -17,6 +18,36 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from models import User
+
+
+# decorator for the token requied
+# reusable
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        # if there is an access token then assign it to token variable
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+
+        if not token:
+            return jsonify({'message' : 'token is missing'}), 401
+
+        # if the token is there
+        try:
+            # decodes the jwt
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+            # queries the User db for the user with the id of the id in the decoded web token
+            # since it is unique can return first result from
+            current_user = User.query.filter_by(id=data['id']).first()
+            print(current_user)
+        except:
+            return jsonify({'message': 'token is invalid'}), 401
+
+        # want to pass the user object to the router
+        return f(current_user, *args, **kwargs)
+
+    return decorated
 
 @app.route('/')
 def hello_world():
@@ -35,7 +66,7 @@ def create_user():
     return jsonify({'message' : 'new user created'})
 
 
-
+# returns all users
 @app.route('/user', methods=['GET'])
 def get_all_users():
     users = User.query.all()
@@ -53,11 +84,13 @@ def get_all_users():
     return jsonify({'users': output})
 
 
-
+# returns one user using a specified id in the url
+#  maybe we don't need this for our app
 @app.route('/user/<user_id>', methods=['GET'])
-def get_one_user(user_id):
+@token_required
+def get_one_user(current_user, user_id):
     user = User.query.filter_by(id = user_id).first()
-    if not user:
+    if not user: 
         return jsonify({'message': ' no user found'})
     
     user_data = {}
@@ -72,7 +105,32 @@ def get_one_user(user_id):
     return jsonify({ 'user': user_data})
 
 
+# gets the user currently using the app using their jwt that we hopefully store in local storage 
+# and send it in the header of our fetch requests on the front end
+@app.route('/current_user', methods=['GET'])
+@token_required
+def get_current_user(current_user):
+    # this step is a bit redundant but i couldn't be bothered to type out everything again
+    print(current_user)
+    user = current_user
+    # i think this is also redundant because the decorator should always return the user or it will
+    # throw an error
+    if not user:
+        return jsonify({'message': ' no user found'})
 
+    user_data = {}
+    user_data['id'] = user.id
+    user_data['name'] = user.name
+    user_data['username'] = user.username
+    user_data['email'] = user.email
+    user_data['password'] = user.password_hash
+    user_data['total_points'] = user.total_points
+
+    # might wanna change these returns to not include 'user'
+    return jsonify({'user': user_data})
+    
+
+# think we should re do this to delete current user again using the decorator - similar to above
 # for if we want a delete profile section on profile page
 @app.route('/user/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
