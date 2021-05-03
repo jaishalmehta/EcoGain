@@ -1,9 +1,16 @@
 import React from 'react'
+// import { Form, Input, Button, Checkbox } from 'antd';
+// import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import './Login.css' 
+import './Login.css'
 var base64 = require('base-64')
 // import RegisterPage from './../pages/RegisterPage'
+
+// const NormalLoginForm = () => {
+//     const onFinish = (values) => {
+//         console.log('Received values of form: ', values);
+//     };
 
 const Login = () => {
     const history = useHistory()
@@ -15,16 +22,17 @@ const Login = () => {
     // state for error
     // const [formError, setFormError] = setError("")
 
-    const loginUser = async(username, password) => {
-        
+    const loginUser = async (username, password) => {
+
         const res = await fetch(`http://localhost:5000/login`, {
             method: 'GET',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json',
-                "Authorization": `Basic ${base64.encode(`${username}:${password}`)}` },
-            }); 
+                "Authorization": `Basic ${base64.encode(`${username}:${password}`)}`
+            },
+        });
         const data = await res.json();
-        console.log(data) 
+        console.log(data)
         // need to insert some logic to check the json web token is returned
         // somehow store it in local storage - need to research
         // maybe we also want the id returned from the backend so we can also store that so we can use it 
@@ -32,7 +40,7 @@ const Login = () => {
         if (data.token) {
             history.push('/userdashboardpage')
         }
-   
+
     }
 
     // upon form submission, need to try to log in, then route to user dashboard page
@@ -41,21 +49,22 @@ const Login = () => {
         loginUser(username, password)
         // we might need to use the id of the user to push them to the user dashboard for their user
         // or maybe will just need id for pushing them to the user profile page
-        
+
     }
 
     return (
         <div>
-            <form onSubmit={loginFormSubmitted}> 
+            {/* <NormalLoginForm /> */}
+            <form onSubmit={loginFormSubmitted}>
                 <div class="input-group">
                     <label>Username</label>
-                    <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="please enter your username"/>
-                </div>  
+                    <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="please enter your username" />
+                </div>
                 <div class="input-group">
                     <label>Password</label>
-                    <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="please enter your password"/>
-                </div> 
-                <input type="submit" value="Log in"/>
+                    <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="please enter your password" />
+                </div>
+                <input type="submit" value="Log in" />
             </form>
             <button onClick={() => history.push('/registerpage')}>Register Now</button>
         </div>
@@ -63,3 +72,4 @@ const Login = () => {
 }
 
 export default Login
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link, Redirect } from "react-router-dom";
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './UserDashboard.css';
@@ -124,7 +124,7 @@ class App extends React.Component {
                 </SubMenu>
 
                 <SubMenu key="Leaderboard" icon={<StarOutlined />} title="LeaderBoard">
-                  <Menu.Item key="ViewLeaderboard">View Leaderboard <Link to="/leaderboardpage" /> </Menu.Item>
+                  <Menu.Item key="ViewLeaderboard">View Leaderboard <Redirect to="/leaderboardpage" /> </Menu.Item>
                 </SubMenu>
 
                 <SubMenu key="Settings" icon={<SettingOutlined />} title="Settings">
