@@ -17,7 +17,7 @@ app.config['SECRET_KEY'] = 'string'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from models import User
+from models import User, Activity
 
 
 # decorator for the token requied
@@ -173,3 +173,28 @@ def login():
 
     # if pword incorrect
     return make_response('could not verify', 401, {'WWW-Authenticate': 'Basic realm= "Login required!"'})
+
+# route for filtering activities by description
+@app.route('/activities/<category>', methods=['GET'])
+def get_activities_by_category(category):
+    filter_category = category.capitalize()
+    activites = Activity.query.filter_by(description = filter_category ).all()
+    if not activites:
+        return jsonify({'message': 'no activities found'})
+
+    output = []
+
+    for activity in activites:
+        activity_data = {}
+        activity_data['id'] = activity.id
+        activity_data['name']= activity.name
+        activity_data['description']= activity.description
+        activity_data['activity_points'] = activity.activity_points
+        output.append(activity_data)
+
+    return jsonify({'activities' : output})
+
+    # click on an icon
+    # get the 'value' of that icon
+    # enter it into the url for the fetch request
+    # that should return the activities + their points
