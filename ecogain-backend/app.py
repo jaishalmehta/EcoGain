@@ -7,8 +7,6 @@ import datetime
 from flask_cors import CORS
 from functools import wraps
 
-
-
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./data/ecogain.sqlite'
@@ -18,7 +16,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from models import User, Activity
-
 
 # decorator for the token requied
 # reusable 
@@ -49,7 +46,6 @@ def token_required(f):
         return f(current_user, *args, **kwargs)
 
     return decorated
-
 
 #Create an account
 @app.route('/user', methods=['POST'])
@@ -177,7 +173,7 @@ def delete_user(user_id):
 
 
 # route for filtering activities by description
-@app.route('/activities/<category>', methods=['GET'])
+@app.route('/activities/<string:category>', methods=['GET'])
 def get_activities_by_category(category):
     filter_category = category.capitalize()
     activites = Activity.query.filter_by(description = filter_category ).all()
@@ -201,3 +197,44 @@ def get_activities_by_category(category):
     # enter it into the url for the fetch request
     # that should return the activities + their points
 
+# route for getting activity points and adding to user points
+@app.route('/activities/<int:id>', methods = ['GET'])
+
+def get_activities_by_points(id):
+    activity = Activity.query.filter_by (id = id).first()
+
+    if not activity:
+        return jsonify({'message': 'no activity found'})
+
+    activity_data = {}
+    activity_data['id'] = activity.id
+    activity_data['name']= activity.name
+    activity_data['description']= activity.description
+    activity_data['activity_points'] = activity.activity_points
+
+    return jsonify({ 'activity_data' : activity_data })
+
+@app.route('/current_user/points', methods = ['PUT'])
+@token_required
+def current_user_points(current_user):
+
+    data = request.get_json()
+    new_points = data['activity_points'] 
+    updated_points = current_user.total_points + new_points
+
+    current_user.total_points = updated_points
+
+    db.session.commit()
+
+    print(current_user.total_points)
+    print(new_points)
+    print(updated_points)
+
+    return jsonify({'New Points' : current_user.total_points})
+
+
+
+
+    
+
+    
