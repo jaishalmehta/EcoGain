@@ -20,7 +20,7 @@ import reuse from '../Images/reuse.svg';
 
 const UserDashboard = () => {
   const { Header, Footer, Sider, Content } = Layout;
-
+  const history = useHistory()
 
   return (
     <div className="App">
@@ -83,15 +83,15 @@ const UserDashboard = () => {
               </Menu.Item>
 
               <SubMenu key="MyProfile" icon={<UserOutlined />} title="My Profile">
-                < Menu.Item key="ViewProfile">View Profile <Link to="/userprofilepage" /> </Menu.Item>
+                < Menu.Item key="ViewProfile" onClick={() => history.push('/userprofilepage')}>View Profile </Menu.Item>
               </SubMenu>
 
               <SubMenu key="EcoCategories" icon={<TableOutlined />} title="Eco Categories">
-                <Menu.Item key="ViewCategories">All categories <Link to="/userdashboardpage" /> </Menu.Item>
+                <Menu.Item key="ViewCategories" onClick={() => history.push('/userdashboardpage')}>All categories </Menu.Item>
               </SubMenu>
 
               <SubMenu key="Leaderboard" icon={<StarOutlined />} title="LeaderBoard">
-                <Menu.Item key="ViewLeaderboard">View Leaderboard <Redirect to="/leaderboardpage" /> </Menu.Item>
+                <Menu.Item key="ViewLeaderboard" onClick={() => history.push('/leaderboardpage')}>View Leaderboard </Menu.Item>
               </SubMenu>
 
               <SubMenu key="Settings" icon={<SettingOutlined />} title="Settings">
@@ -99,7 +99,7 @@ const UserDashboard = () => {
               </SubMenu>
 
               <SubMenu key="Logout" icon={<LogoutOutlined />} title="Logout">
-                <Menu.Item key="LogoutButton">Logout </Menu.Item>
+                <Menu.Item key="LogoutButton" onClick={() => history.push('/')}>Logout </Menu.Item>
 
               </SubMenu>
 
