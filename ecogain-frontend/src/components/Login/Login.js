@@ -4,13 +4,11 @@ import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import './Login.css'
+
 var base64 = require('base-64')
 // import RegisterPage from './../pages/RegisterPage'
 
-// const NormalLoginForm = () => {
-//     const onFinish = (values) => {
-//         console.log('Received values of form: ', values);
-//     };
+
 
 const Login = () => {
     const history = useHistory()
@@ -18,6 +16,8 @@ const Login = () => {
     // set states for form inputs
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    //const token = sessionStorage.getItem('token')
+
 
     // state for error
     // const [formError, setFormError] = setError("")
@@ -31,26 +31,28 @@ const Login = () => {
                 "Authorization": `Basic ${base64.encode(`${username}:${password}`)}`
             },
         });
-        const data = await res.json();
-        console.log(data)
-        // need to insert some logic to check the json web token is returned
-        // somehow store it in local storage - need to research
-        // maybe we also want the id returned from the backend so we can also store that so we can use it 
-        // to display the correct user profile page
-        if (data.token) {
+
+        const data = await res.json()
+        sessionStorage.setItem('token', data.token); //stores the jwt in browser's sessionStorage
+        console.log(data) // can view token with the developers tools
+
+        if (data.token !== null && data.token !== '' && data.token !== undefined) {
             history.push('/userdashboardpage')
-        }
+        } // if the token is present and valid, user is directed to userdashboard page
 
     }
+    // next step - keep the token when the browser is refreshed -> will need the token to be stored globally so it can be accessed by other components
+    // next step - logging out which will involve deleteing the token from the sessionStorage
 
+    // maybe we also want the id returned from the backend so we can also store that so we can use it 
+    // to display the correct user profile page
     // upon form submission, need to try to log in, then route to user dashboard page
-    const loginFormSubmitted = (e) => {
+    // we might need to use the id of the user to push them to the user dashboard for their user
+    // or maybe will just need id for pushing them to the user profile page
+    const loginFormSubmitted = async (e) => {
         e.preventDefault()
         loginUser(username, password)
-        // we might need to use the id of the user to push them to the user dashboard for their user
-        // or maybe will just need id for pushing them to the user profile page
-
-    }
+    } // not entirely sure what this function does
 
     return (
         <div>
@@ -70,6 +72,7 @@ const Login = () => {
         </div>
     )
 }
+
 
 export default Login
 
