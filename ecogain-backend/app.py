@@ -21,7 +21,8 @@ from models import User, Activity
 
 
 # decorator for the token requied
-# reusable
+# reusable 
+# certain routes require a token to access (i.e. a user account) 
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -49,11 +50,8 @@ def token_required(f):
 
     return decorated
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
 
-
+#Create an account
 @app.route('/user', methods=['POST'])
 def create_user():
     data = request.get_json()
@@ -66,7 +64,65 @@ def create_user():
     return jsonify({'message' : 'new user created'})
 
 
-# returns all users
+#allow to take username and pword
+# use http authentication
+#creates a token which will expire after some time
+#use token in header for subsequent req
+@app.route('/login')
+def login():
+    auth = request.authorization
+
+    if not auth or not auth.username or not auth.password:
+        # if no auth info at all / no user/no pwordthen return the following
+        return make_response('could not verify', 401, {'WWW-Authenticate' : 'Basic realm= "Login required!"'})
+    
+    # if there is auth information
+    # want to get the user
+    user = User.query.filter_by(username=auth.username).first()
+
+    if not user:
+        return jsonify({'message': ' no user found'})
+
+    # then the user does exist
+    # need to check pword
+    if check_password_hash(user.password_hash, auth.password):
+        # then generate token
+        token = jwt.encode({'id': user.id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+        return jsonify({'token': token.decode('UTF-8')})
+
+    # if pword incorrect
+    return make_response('could not verify', 401, {'WWW-Authenticate': 'Basic realm= "Login required!"'})
+
+
+
+# gets the user currently using the app using their jwt that we hopefully store in local storage 
+# and send it in the header of our fetch requests on the front end
+
+
+@app.route('/current_user', methods=['GET'])
+@token_required
+def get_current_user(current_user):
+    # this step is a bit redundant but i couldn't be bothered to type out everything again
+    print(current_user)
+    user = current_user
+    # i think this is also redundant because the decorator should always return the user or it will
+    # throw an error
+    if not user:
+        return jsonify({'message': ' no user found'})
+
+    user_data = {}
+    user_data['id'] = user.id
+    user_data['name'] = user.name
+    user_data['username'] = user.username
+    user_data['email'] = user.email
+    user_data['password'] = user.password_hash
+    user_data['total_points'] = user.total_points
+
+    # might wanna change these returns to not include 'user'
+    return jsonify({'user': user_data})
+    
+
+# returns all users - potential route for the leaderboard feature (nice-to-have feature)
 @app.route('/user', methods=['GET'])
 def get_all_users():
     users = User.query.all()
@@ -105,30 +161,6 @@ def get_one_user(current_user, user_id):
     return jsonify({ 'user': user_data})
 
 
-# gets the user currently using the app using their jwt that we hopefully store in local storage 
-# and send it in the header of our fetch requests on the front end
-@app.route('/current_user', methods=['GET'])
-@token_required
-def get_current_user(current_user):
-    # this step is a bit redundant but i couldn't be bothered to type out everything again
-    print(current_user)
-    user = current_user
-    # i think this is also redundant because the decorator should always return the user or it will
-    # throw an error
-    if not user:
-        return jsonify({'message': ' no user found'})
-
-    user_data = {}
-    user_data['id'] = user.id
-    user_data['name'] = user.name
-    user_data['username'] = user.username
-    user_data['email'] = user.email
-    user_data['password'] = user.password_hash
-    user_data['total_points'] = user.total_points
-
-    # might wanna change these returns to not include 'user'
-    return jsonify({'user': user_data})
-    
 
 # think we should re do this to delete current user again using the decorator - similar to above
 # for if we want a delete profile section on profile page
@@ -143,36 +175,6 @@ def delete_user(user_id):
     db.session.commit()
     return jsonify ({'message': 'user deleted'})
 
-
-
-#allow to take username and pword
-# use http authentication
-#get a token which will expire after some time
-#use token in header for subsequent req
-@app.route('/login')
-def login():
-    auth = request.authorization
-
-    if not auth or not auth.username or not auth.password:
-        # if no auth info at all / no user/no pwordthen return the following
-        return make_response('could not verify', 401, {'WWW-Authenticate' : 'Basic realm= "Login required!"'})
-    
-    # if there is auth information
-    # want to get the user
-    user = User.query.filter_by(username=auth.username).first()
-
-    if not user:
-        return jsonify({'message': ' no user found'})
-
-    # then the user does exist
-    # need to check pword
-    if check_password_hash(user.password_hash, auth.password):
-        # then generate token
-        token = jwt.encode({'id': user.id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-        return jsonify({'token': token.decode('UTF-8')})
-
-    # if pword incorrect
-    return make_response('could not verify', 401, {'WWW-Authenticate': 'Basic realm= "Login required!"'})
 
 # route for filtering activities by description
 @app.route('/activities/<category>', methods=['GET'])
@@ -198,3 +200,4 @@ def get_activities_by_category(category):
     # get the 'value' of that icon
     # enter it into the url for the fetch request
     # that should return the activities + their points
+
