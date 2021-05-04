@@ -1,10 +1,11 @@
 import React from 'react'
+import LeaderBoard from '../components/Leaderboard/Leaderboard'
 
 const LeaderBoardPage = () => {
     return (
         <div>
-           leader board page 
-        </div>
+            <LeaderBoard />
+        </div >
     )
 }
 
