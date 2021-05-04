@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './UserDashboard.css';
 import { Layout, Menu, Progress, Row, Col, } from 'antd';
-import { UserOutlined, StarOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled } from '@ant-design/icons';
-import Sidebar from '../Sidebar/Sidebar';
+import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import transportation from '../Images/transportation.svg';
@@ -75,7 +74,37 @@ const UserDashboard = () => {
 
             <Footer style={{ textAlign: 'center', color: '#808080', fontSize: '20px' }}>©2021 EcoGain Ltd. <br /> <LinkedinFilled /> <FacebookFilled /> <InstagramFilled /> <AndroidFilled /> <AppleFilled /> <WindowsFilled /> </Footer>
           </Layout>
-          <Sidebar />
+
+          <Sider style={{ background: '#fff' }}>
+
+            <Menu defaultSelectedKeys={['Dashboard']} mode="inline">
+              <Menu.Item key='Dashboard' >
+                <SubMenu key="MenuBar" title="Menu Bar" />
+              </Menu.Item>
+
+              <SubMenu key="MyProfile" icon={<UserOutlined />} title="My Profile">
+                < Menu.Item key="ViewProfile">View Profile <Link to="/userprofilepage" /> </Menu.Item>
+              </SubMenu>
+
+              <SubMenu key="EcoCategories" icon={<TableOutlined />} title="Eco Categories">
+                <Menu.Item key="ViewCategories">All categories <Link to="/userdashboardpage" /> </Menu.Item>
+              </SubMenu>
+
+              <SubMenu key="Leaderboard" icon={<StarOutlined />} title="LeaderBoard">
+                <Menu.Item key="ViewLeaderboard">View Leaderboard <Redirect to="/leaderboardpage" /> </Menu.Item>
+              </SubMenu>
+
+              <SubMenu key="Settings" icon={<SettingOutlined />} title="Settings">
+                <Menu.Item key="AccountSettings">Account Settings</Menu.Item>
+              </SubMenu>
+
+              <SubMenu key="Logout" icon={<LogoutOutlined />} title="Logout">
+                <Menu.Item key="LogoutButton">Logout </Menu.Item>
+
+              </SubMenu>
+
+            </Menu>
+          </Sider>
         </Layout>
       </Router>
     </div >
