@@ -76,7 +76,7 @@ const UserDashboard = () => {
                                 <div >
                                     <div >
 
-                                        <h1 style={{ color: '#449BCD', fontSize: '60px', textAlign: 'bottom', alignText: 'top', paddingTop: '10px' }}>Top Contributers</h1>
+                                        <h1 style={{ color: '#ffc500', fontSize: '60px', paddingTop: '10px', fontWeight: 'bold' }}>Top Contributers</h1>
 
                                         <img className="podium" style={{
                                             width: "450px", height: '450px', flexDirection: 'row',
