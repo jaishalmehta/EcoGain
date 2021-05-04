@@ -19,47 +19,6 @@ migrate = Migrate(app, db)
 
 from models import User, Activity
 
-#Sign up/create an account
-@app.route('/user', methods=['POST'])
-def create_user():
-    data = request.get_json()
-    hash_password = generate_password_hash(data['passwordOne'], method='sha256')
-        # verification
-    new_user = User(name = data['name'], username = data['username'], email = data['email'], password_hash = hash_password, total_points = 0 )
-    db.session.add(new_user)
-    db.session.commit()
-
-    return jsonify({'message' : 'new user created'})
-
-#allow to take username and pword
-# use http authentication
-#creates a token which will expire after some time
-#use token in header for subsequent req
-@app.route('/login')
-def login():
-    auth = request.authorization
-
-    if not auth or not auth.username or not auth.password:
-        # if no auth info at all / no user/no pwordthen return the following
-        return make_response('could not verify', 401, {'WWW-Authenticate' : 'Basic realm= "Login required!"'})
-    
-    # if there is auth information
-    # want to get the user
-    user = User.query.filter_by(username=auth.username).first()
-
-    if not user:
-        return jsonify({'message': ' no user found'})
-
-    # then the user does exist
-    # need to check pword
-    if check_password_hash(user.password_hash, auth.password):
-        # then generate token
-        token = jwt.encode({'id': user.id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-        return jsonify({'token': token.decode('UTF-8')})
-
-    # if pword incorrect
-    return make_response('could not verify', 401, {'WWW-Authenticate': 'Basic realm= "Login required!"'})
-
 
 # decorator for the token requied
 # reusable 
@@ -92,8 +51,54 @@ def token_required(f):
     return decorated
 
 
+#Create an account
+@app.route('/user', methods=['POST'])
+def create_user():
+    data = request.get_json()
+    hash_password = generate_password_hash(data['passwordOne'], method='sha256')
+        # verification
+    new_user = User(name = data['name'], username = data['username'], email = data['email'], password_hash = hash_password, total_points = 0 )
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'message' : 'new user created'})
+
+
+#allow to take username and pword
+# use http authentication
+#creates a token which will expire after some time
+#use token in header for subsequent req
+@app.route('/login')
+def login():
+    auth = request.authorization
+
+    if not auth or not auth.username or not auth.password:
+        # if no auth info at all / no user/no pwordthen return the following
+        return make_response('could not verify', 401, {'WWW-Authenticate' : 'Basic realm= "Login required!"'})
+    
+    # if there is auth information
+    # want to get the user
+    user = User.query.filter_by(username=auth.username).first()
+
+    if not user:
+        return jsonify({'message': ' no user found'})
+
+    # then the user does exist
+    # need to check pword
+    if check_password_hash(user.password_hash, auth.password):
+        # then generate token
+        token = jwt.encode({'id': user.id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+        return jsonify({'token': token.decode('UTF-8')})
+
+    # if pword incorrect
+    return make_response('could not verify', 401, {'WWW-Authenticate': 'Basic realm= "Login required!"'})
+
+
+
 # gets the user currently using the app using their jwt that we hopefully store in local storage 
 # and send it in the header of our fetch requests on the front end
+
+
 @app.route('/current_user', methods=['GET'])
 @token_required
 def get_current_user(current_user):
@@ -133,19 +138,6 @@ def get_all_users():
         output.append(user_data)
 
     return jsonify({'users': output})
-
-# th might be helpful starting point for Jaishal's task of filtering the activities
-@app.route('/activities', methods=['GET'])
-def all_activities():
-    activities = Activity.query.all()
-    output = []
-    for activity in activities:
-        activity_data = {}
-        activity_data['name'] = Activity.name
-        activity_data['activity_points'] = Activity.activity_points
-        output.append(activity_data)
-    
-    return jsonify({'activities': output})
 
 
 # returns one user using a specified id in the url
