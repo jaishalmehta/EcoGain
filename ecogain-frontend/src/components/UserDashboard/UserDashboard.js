@@ -45,7 +45,7 @@ const UserDashboard = () => {
                 <div>
 
                   <Row justify="space-around" className="Row">
-                    <button className="IconBtn"> <Col span={3} > <img src={transportation} alt="transportation" /> </Col> </button>
+                    <button className="IconBtn"> <Col span={3} > <img src={transportation} alt="transportation" onClick={() => history.push('/activities/transport')}/> </Col> </button>
                     <button className="IconBtn"> <Col span={3} > <img src={harvest} alt="harvest" /> </Col> </button>
                     <button className="IconBtn"> <Col span={3} > <img src={animals} alt="animals" /> </Col> </button>
                   </Row>
