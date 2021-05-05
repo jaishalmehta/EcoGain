@@ -36,10 +36,11 @@ const Login = () => {
         });
 
         const data = await res.json()
-        sessionStorage.setItem('token', data.token); //stores the jwt in browser's sessionStorage
+        //sessionStorage.setItem('token', data.token); //stores the jwt in browser's sessionStorage
         console.log(data) // can view token with the developers tools
 
         if (data.token !== null && data.token !== '' && data.token !== undefined) {
+            localStorage.setItem('token', data.token)
             history.push('/userdashboardpage')
         } // if the token is present and valid, user is directed to userdashboard page
 
