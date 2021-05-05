@@ -46,28 +46,24 @@ const UserDashboard = () => {
                 <div>
 
                   <Row justify="space-around" className="Row">
-                    <button className="IconBtn"> <Col span={3} > <img src={transportation} alt="transportation" /> </Col> </button>
-                    <button className="IconBtn"> <Col span={3} > <img src={harvest} alt="harvest" /> </Col> </button>
-                    <button className="IconBtn"> <Col span={3} > <img src={animals} alt="animals" /> </Col> </button>
+                    <button className="IconBtn"> <Col span={3} > <img src={transportation} alt="transportation" onClick={() => history.push('/activities/transport')} /> </Col> </button>
+                    <button className="IconBtn"> <Col span={3} > <img src={harvest} alt="harvest" onClick={() => history.push('/activities/food')}/> </Col> </button>
+                    <button className="IconBtn"> <Col span={3} > <img src={animals} alt="animals" onClick={() => history.push('/activities/food')}/> </Col> </button>
                   </Row>
 
                   <Row justify="space-around" className="Row">
-                    <button className="IconBtn"> <Col span={3} > <img src={tshirt} alt="tshirt" /> </Col> </button>
-                    <button className="IconBtn"> <Col span={3}> <img src={reduce} alt="reduce" /> </Col> </button>
-                    <button className="IconBtn"> <Col span={3}> <img src={reuse} alt="reuse" /> </Col> </button>
+                    <button className="IconBtn"> <Col span={3} > <img src={tshirt} alt="tshirt" onClick={() => history.push('/activities/clothing')}/> </Col> </button>
+                    <button className="IconBtn"> <Col span={3}> <img src={reduce} alt="reduce" onClick={() => history.push('/activities/reuse')}/> </Col> </button>
+                    <button className="IconBtn"> <Col span={3}> <img src={recycle} alt="recycle" onClick={() => history.push('/activities/recycle')}/> </Col> </button>
                   </Row>
 
                   <Row justify="space-around" className="Row">
-                    <button className="IconBtn"> <Col span={3}> <img src={recycle} alt="recycle" /> </Col> </button>
-                    <button className="IconBtn"> <Col span={3}> <img src={energy} alt="energy" /> </Col> </button>
+                    <button className="IconBtn"> <Col span={3}> <img src={energy} alt="energy" onClick={() => history.push('/activities/energy')}/> </Col> </button>
                     <button className="IconBtn"> <Col span={3}> <img src={plants} alt="plants" /> </Col> </button>
+                    <button className="IconBtn"> <Col span={3}> <img src={other} alt="other" /> </Col> </button>
                   </Row>
 
-                  <Row justify="space-around" className="Row">
-                    <button className="IconBtn"> <Col span={3}> <img src={other} alt="other" /> </Col> </button>
-                    <Col span={3} ></Col>
-                    <Col span={3} ></Col>
-                  </Row>
+
 
                 </div>
               </div>
