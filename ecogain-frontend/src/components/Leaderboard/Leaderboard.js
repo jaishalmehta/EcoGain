@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Redirect } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Leaderboard.css';
 import { Layout, Menu, Table, Row, Col, } from 'antd';
@@ -8,11 +8,12 @@ import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, Logou
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import cutetrophy from '../Images/cutetrophy.gif';
+import useDeepCompareEffect from 'use-deep-compare-effect'
 
 const columns = [
     {
         title: 'Username',
-        dataIndex: 'Username',
+        dataIndex: 'Username',//
     },
 
     {
@@ -56,6 +57,44 @@ const UserDashboard = () => {
     const { Header, Footer, Sider, Content } = Layout;
     const history = useHistory()
 
+    const [leaderboarddata, setLeaderBoardData] = useState([])
+    const [fetched, setFetched] = useState(false)
+
+    useDeepCompareEffect(() => {
+        const fetchFromAPI = async () => {
+            const dataFromServer = await fetchData();
+            //console.log(dataFromServer)
+
+            setLeaderBoardData(dataFromServer.users)
+            console.log(leaderboarddata)
+            if (leaderboarddata.length > 0) {
+                setFetched(true)
+            }
+            
+            
+        }
+        fetchFromAPI();
+
+    }, [leaderboarddata]);
+
+    const fetchData = async () => {
+        const res = await fetch(`http://localhost:5000/user`, {
+            method:"GET",
+
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const data = await res.json()
+        //console.log(data)
+        return data;
+    };
+
+
+
+    
+
+
     return (
         <div className="App">
             <Router>
@@ -84,7 +123,10 @@ const UserDashboard = () => {
                                         }} src={cutetrophy} alt="cutetrophy" />
                                     </div>
 
-                                    <Table columns={columns} dataSource={data} onChange={onChange} />
+                                    <Table columns={columns} dataSource={leaderboarddata} onChange={onChange} />
+                                    <div>{ fetched ? <div>{leaderboarddata.map((user) => {
+                                        <div>{user.username}</div>
+                                    })}</div> : 'loading leaderboard'}</div>
                                 </div>
                             </div>
                         </Content>
