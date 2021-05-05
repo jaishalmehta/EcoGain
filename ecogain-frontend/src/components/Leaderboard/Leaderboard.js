@@ -108,7 +108,7 @@ const UserDashboard = () => {
                             </SubMenu>
 
                             <SubMenu key="Logout" icon={<LogoutOutlined />} title="Logout">
-                                <Menu.Item key="LogoutButton" onClick={() => history.push('/')}>Logout </Menu.Item>
+                                <Menu.Item key="LogoutButton" onClick={() => { localStorage.removeItem('token'); history.push('/')}}>Logout </Menu.Item>
 
                             </SubMenu>
 

@@ -15,18 +15,23 @@ const UserProfile = () => {
 
     const [user, setUser ] = useState({})
     const [fetched, setFetched] = useState(false)
+
+
+    
+    
     
 
     useEffect(() => {
         const fetchFromAPI = async () => {
-          const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjIwMTY2NTQ0fQ.BcQtrHfAfChkKZ0TXnyQ4FSi1gzfg3V-EDH25iPfua8'
+          const token = localStorage.getItem('token')
           const userFromServer = await fetchUser(token);
 
           setUser(userFromServer);
+          
           if (user.user ) {
             console.log(user.user)
             console.log(user.user.name)
-            setFetched(true)
+            setFetched(true) //
           }
           
     };
@@ -104,7 +109,7 @@ const UserProfile = () => {
                             </SubMenu>
 
                             <SubMenu key="Logout" icon={<LogoutOutlined />} title="Logout">
-                                <Menu.Item key="LogoutButton" onClick={() => history.push('/')}>Logout </Menu.Item>
+                                <Menu.Item key="LogoutButton" onClick={() => { localStorage.removeItem('token'); history.push('/')}}>Logout </Menu.Item>
 
                             </SubMenu>
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router,  Redirect } from "react-router-dom";
+
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import './UserDashboard.css';
 import { Layout, Menu, Progress, Row, Col, } from 'antd';
 import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled } from '@ant-design/icons';
@@ -83,7 +84,7 @@ const UserDashboard = () => {
               </Menu.Item>
 
               <SubMenu key="MyProfile" icon={<UserOutlined />} title="My Profile">
-                < Menu.Item key="ViewProfile" onClick={() => history.push('/userprofilepage')}>View Profile </Menu.Item>
+                < Menu.Item key="ViewProfile" onClick={() => history.push('/userprofilepage')} >Profile </Menu.Item> 
               </SubMenu>
 
               <SubMenu key="EcoCategories" icon={<TableOutlined />} title="Eco Categories">
@@ -99,7 +100,7 @@ const UserDashboard = () => {
               </SubMenu>
 
               <SubMenu key="Logout" icon={<LogoutOutlined />} title="Logout">
-                <Menu.Item key="LogoutButton" onClick={() => history.push('/')}>Logout </Menu.Item>
+                <Menu.Item key="LogoutButton" onClick={() => { localStorage.removeItem('token'); history.push('/')}}>Logout </Menu.Item>
 
               </SubMenu>
 
