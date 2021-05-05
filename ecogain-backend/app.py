@@ -121,7 +121,10 @@ def get_current_user(current_user):
 # returns all users - potential route for the leaderboard feature (nice-to-have feature)
 @app.route('/user', methods=['GET'])
 def get_all_users():
-    users = User.query.all()
+
+    
+    users = User.query.order_by(User.total_points.desc()).limit(10).all()
+
     output = []
     for user in users:
         user_data = {}
@@ -231,6 +234,8 @@ def current_user_points(current_user):
     print(updated_points)
 
     return jsonify({'New Points' : current_user.total_points})
+
+
 
 
 
