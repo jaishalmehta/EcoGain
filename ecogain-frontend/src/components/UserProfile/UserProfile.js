@@ -7,7 +7,9 @@ import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, Logou
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { useState, useEffect } from 'react'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 const { Header, Footer, Sider, Content } = Layout;
+
 
 const UserProfile = () => {
     const { Header, Footer, Sider, Content } = Layout;
@@ -16,27 +18,20 @@ const UserProfile = () => {
     const [user, setUser ] = useState({})
     const [fetched, setFetched] = useState(false)
 
-
-    
-    
-    
-
-    useEffect(() => {
+    useDeepCompareEffect(() => {
         const fetchFromAPI = async () => {
           const token = localStorage.getItem('token')
           const userFromServer = await fetchUser(token);
 
           setUser(userFromServer);
           
-          if (user.user ) {
-            console.log(user.user)
-            console.log(user.user.name)
+          if (user) {
             setFetched(true) //
           }
           
     };
         fetchFromAPI();
-  }, []);
+  }, [user]);
 
   // write fetchTask func
   const fetchUser = async (token) => {
@@ -75,9 +70,9 @@ const UserProfile = () => {
                                     <StarTwoTone spin style={{ float: 'left', fontSize: '30px' }} /> <Progress percent={55} status="active" />
                                 </div>
 
-                                {fetched ? <>   <h1>{user.user.name}</h1> 
-                                            <h2>{user.user.username}</h2> 
-                                            <h5>{user.user.total_points}</h5> </> : ''} 
+                                {fetched ? <>   <h1>{user.name}</h1> 
+                                            <h2>{user.username}</h2> 
+                                            <h5>{user.total_points}</h5> </> : 'loading profile'} 
                             </div>
 
                             
