@@ -11,7 +11,7 @@ var base64 = require('base-64')
 
 
 const Login = () => {
-    const onFinish = (values) => {
+    const onFinish = (values, e) => {
         console.log('Received values of form: ', values);
     };
     const history = useHistory()
@@ -52,14 +52,15 @@ const Login = () => {
     // upon form submission, need to try to log in, then route to user dashboard page
     // we might need to use the id of the user to push them to the user dashboard for their user
     // or maybe will just need id for pushing them to the user profile page
-    const loginFormSubmitted = async (e) => {
-        e.preventDefault()
+    const loginFormSubmitted = async ( values) => {
+        // e.preventDefault()
+        console.log('yay')
         loginUser(username, password)
     } // not entirely sure what this function does
 
     return (
         <div>
-            <Form name="normal_login" className="login-form" initialValues={{ remember: true, }} onFinish={onFinish} onSubmit={loginFormSubmitted}>
+            <Form name="normal_login" className="login-form" initialValues={{ remember: true, }}  onFinish={( values) => loginFormSubmitted( values)}>
 
 
 
