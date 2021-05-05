@@ -13,7 +13,7 @@ const formItemLayout = {
             span: 24
         },
         sm: {
-            span: 8
+            span: 9
         }
     },
     wrapperCol: {
@@ -21,7 +21,7 @@ const formItemLayout = {
             span: 24
         },
         sm: {
-            span: 16
+            span: 8
         }
     }
 };
@@ -33,7 +33,7 @@ const tailFormItemLayout = {
         },
         sm: {
             span: 16,
-            offset: 8
+            offset: 5
         }
     }
 };
@@ -85,24 +85,24 @@ const RegisterForm = () => {
             <Form {...formItemLayout} form={form} name="register" onFinish={onFinish} scrollToFirstError onSubmit={submitRegisterForm}>
                 <div>
                     <Form.Item name="Full Name" label="Full Name" tooltip="What is your Full Name?" rules={[{ required: true, message: "Please input your full name!", whitespace: true }]}>
-                        <Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="What is your full name?" />
+                        <Input style={{ width: '350px', alignItems: 'center' }} value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="What is your full name?" />
                     </Form.Item>
 
                 </div>
                 <div>
                     <Form.Item name="Username" label="Username" tooltip="What do you want others to call you?" rules={[{ required: true, message: "Please input your username!", whitespace: true }]}>
-                        <Input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Please enter a username" />
+                        <Input style={{ width: '350px', alignItems: 'center' }} value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Please enter a username" />
                     </Form.Item>
                 </div>
                 <div>
                     <Form.Item name="email" label="E-mail" tooltip="What is your email address?" rules={[{ type: "email", message: "The input is not valid E-mail!" }, { required: true, message: "Please input your E-mail!" }]}>
-                        <Input value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="What's your email?" />
+                        <Input style={{ width: '350px', alignItems: 'center' }} value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="What's your email?" />
                     </Form.Item>
                 </div>
 
                 <div>
                     <Form.Item name="password" label="Password" tooltip="Please select a password." rules={[{ required: true, message: "Please input your password!" }]} hasFeedback >
-                        <Input.Password value={passwordOne} onChange={(e) => setPasswordOne(e.target.value)} type="text" placeholder="Please enter a password" />
+                        <Input.Password style={{ width: '350px', alignItems: 'center' }} value={passwordOne} onChange={(e) => setPasswordOne(e.target.value)} type="text" placeholder="Please enter a password" />
                     </Form.Item>
                 </div>
 
@@ -123,19 +123,21 @@ const RegisterForm = () => {
                             })
                         ]}
                     >
-                        <Input.Password value={passwordTwo} onChange={(e) => setPasswordTwo(e.target.value)} type="text" placeholder="Please repeat your password" />
+                        <Input.Password style={{ width: '350px', alignItems: 'center' }} value={passwordTwo} onChange={(e) => setPasswordTwo(e.target.value)} type="text" placeholder="Please repeat your password" />
                     </Form.Item>
                 </div>
 
                 <Form.Item name="terms and conditions" valuePropName="checked" rules={[{ validator: (_, value) => value ? Promise.resolve() : Promise.reject(new Error("Please accept the terms and conditions")) }]} {...tailFormItemLayout}>
-                    <Checkbox>
+                    <Checkbox style={{ width: '250px', align: 'center' }}>
                         I have read and accept EcoGain's <a href="">terms and conditions</a>
                     </Checkbox>
                 </Form.Item>
+                <div>
+                    <Form.Item {...tailFormItemLayout}>
+                        <Input style={{ width: '110px', height: '30px', align: 'center' }} type="submit" value="Register now" htmlType="submit" />
+                    </Form.Item>
+                </div>
 
-                <Form.Item {...tailFormItemLayout}>
-                    <Input type="submit" value="Register now" htmlType="submit" />
-                </Form.Item>
 
 
 

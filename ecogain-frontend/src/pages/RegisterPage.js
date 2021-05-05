@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import RegisterForm from '../components/RegisterForm/RegisterForm';
 import Logo from '../components/Images/Logo.png';
 
