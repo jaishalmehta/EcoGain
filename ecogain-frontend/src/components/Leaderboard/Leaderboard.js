@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Redirect } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Leaderboard.css';
 import { Layout, Menu, Table, Row, Col, } from 'antd';
-import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled } from '@ant-design/icons';
+import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled, ConsoleSqlOutlined } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
 
@@ -24,6 +24,30 @@ const columns = [
         },
     },
 ];
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const data = [
     {
@@ -55,6 +79,58 @@ function onChange(pagination, filters, sorter, extra) {
 const UserDashboard = () => {
     const { Header, Footer, Sider, Content } = Layout;
     const history = useHistory()
+
+    const [leaderboarddata, setLeaderBoardData] = useState([])
+
+    useEffect(() => {
+        const fetchFromAPI = async () => {
+            const dataFromServer = await fetchData();
+            //console.log(dataFromServer)
+
+            setLeaderBoardData(dataFromServer)
+            console.log(leaderboarddata)
+        }
+        fetchFromAPI();
+
+    }, []);
+
+    const fetchData = async () => {
+        const res = await fetch(`http://localhost:5000/user`, {
+            method:"GET",
+
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const data = await res.json()
+        //console.log(data)
+        return data;
+    }
+    //
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     return (
         <div className="App">
