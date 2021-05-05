@@ -102,13 +102,13 @@ const RegisterForm = () => {
                 </div>
 
                 <div>
-                    <Form.Item name="password" label="Password" tooltip="Please select a password." rules={[{ required: true, message: "Please input your password!" }]} hasFeedback >
+                    <Form.Item name="password" label="Password" tooltip="Please select a password." rules={[{ required: true, message: "Please input your password!" }]}  >
                         <Input.Password style={{ width: '350px', alignItems: 'center' }} value={passwordOne} onChange={(e) => setPasswordOne(e.target.value)} type="text" placeholder="Please enter a password" />
                     </Form.Item>
                 </div>
 
                 <div>
-                    <Form.Item name="confirm" label="Confirm Password" tooltip="Please re-enter your selected password." dependencies={["password"]} hasFeedback
+                    <Form.Item name="confirm" label="Confirm Password" tooltip="Please re-enter your selected password." dependencies={["password"]}
                         rules={[
                             { required: true, message: "Please confirm your password!" },
                             ({ getFieldValue }) => ({
