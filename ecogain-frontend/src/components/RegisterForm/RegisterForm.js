@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import "antd/dist/antd.css";
-import { Form, Input, Select, Checkbox } from "antd";
+import { Form, Input, Select, Checkbox, Button } from "antd";
 const { Option } = Select;
 
 
@@ -136,7 +136,15 @@ const RegisterForm = () => {
 
                 <div>
                     <Form.Item {...tailFormItemLayout}>
-                        <Input style={{ width: '110px', height: '30px', align: 'center' }} type="submit" value="Register now" htmlType="submit" />
+                        <div>
+                            <Input style={{ width: '110px', height: '30px', align: 'center' }} type="submit" value="Register now" htmlType="submit" />
+                        </div>
+                        <br />
+                        <div>
+                            <Button style={{ width: '110px', height: '30px', align: 'center' }} onClick={() => history.push('/')}>
+                                Go back
+                        </Button>
+                        </div>
                     </Form.Item>
                 </div>
 
