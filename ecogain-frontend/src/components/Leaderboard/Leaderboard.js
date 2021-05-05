@@ -7,7 +7,7 @@ import { Layout, Menu, Table, Row, Col, } from 'antd';
 import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
-
+import cutetrophy from '../Images/cutetrophy.gif';
 
 const columns = [
     {
@@ -74,7 +74,16 @@ const UserDashboard = () => {
 
                             <div className="site-layout-background" style={{ minHeight: 380 }}>
                                 <div >
-                                    <h1 style={{ color: '#449BCD', fontSize: '30px', textAlign: 'center' }}>Top Contributers</h1>
+                                    <div >
+
+                                        <h1 style={{ color: '#ffc500', fontSize: '60px', paddingTop: '10px', fontWeight: 'bold' }}>Top Contributers</h1>
+
+                                        <img className="podium" style={{
+                                            width: "450px", height: '450px', flexDirection: 'row',
+                                            alignItems: 'stretch'
+                                        }} src={cutetrophy} alt="cutetrophy" />
+                                    </div>
+
                                     <Table columns={columns} dataSource={data} onChange={onChange} />
                                 </div>
                             </div>

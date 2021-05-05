@@ -1,6 +1,6 @@
 import React from 'react'
-// import { Form, Input, Button, Checkbox } from 'antd';
-// import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Checkbox } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import './Login.css'
@@ -11,6 +11,9 @@ var base64 = require('base-64')
 
 
 const Login = () => {
+    const onFinish = (values, e) => {
+        console.log('Received values of form: ', values);
+    };
     const history = useHistory()
 
     // set states for form inputs
@@ -49,27 +52,64 @@ const Login = () => {
     // upon form submission, need to try to log in, then route to user dashboard page
     // we might need to use the id of the user to push them to the user dashboard for their user
     // or maybe will just need id for pushing them to the user profile page
-    const loginFormSubmitted = async (e) => {
-        e.preventDefault()
+    const loginFormSubmitted = async ( values) => {
+        // e.preventDefault()
+        console.log('yay')
         loginUser(username, password)
     } // not entirely sure what this function does
 
     return (
         <div>
-            {/* <NormalLoginForm /> */}
-            <form onSubmit={loginFormSubmitted}>
-                <div class="input-group">
-                    <label>Username</label>
-                    <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="please enter your username" />
+            <Form name="normal_login" className="login-form" initialValues={{ remember: true, }}  onFinish={( values) => loginFormSubmitted( values)}>
+
+
+
+                <div >
+                    <Form.Item style={{ width: '350px', alignItems: 'center' }} name="username" rules={[{ required: true, message: 'Please input your Username!', },]} noStyle>
+                        <Input style={{ width: '350px', alignItems: 'center' }} prefix={<UserOutlined className="site-form-item-icon" />} value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
+                    </Form.Item>
                 </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="please enter your password" />
+
+
+
+                <div>
+                    <Form.Item style={{ width: '350px', alignItems: 'center' }} name="password" rules={[{ required: true, message: 'Please input your Password!' },]} noStyle>
+                        <Input style={{ width: '350px', alignItems: 'center' }} prefix={<LockOutlined className="site-form-item-icon" />} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+                    </Form.Item>
                 </div>
-                <input type="submit" value="Log in" />
-            </form>
-            <button onClick={() => history.push('/registerpage')}>Register Now</button>
-        </div>
+                <br />
+
+                <Form.Item>
+                    <div>
+                        <div>
+                            <Form.Item name="remember" valuePropName="checked" noStyle>
+                                <Checkbox>Remember me</Checkbox>
+                            </Form.Item>
+                        </div>
+                        <div>
+                            <a className="login-form-forgot" href="">
+                                Forgot password?
+                            </a>
+                        </div>
+                    </div>
+
+
+                </Form.Item>
+
+                <Form.Item>
+                    <div>
+                        <Button style={{ width: '110px', height: '30px' }} type="submit" value="Log in" htmlType="submit" className="login-form-button">
+                            Login here
+                        </Button>
+                    </div>
+                    <div>
+                        <Button style={{ width: '110px', height: '30px' }} onClick={() => history.push('/registerpage')}>
+                            Register now
+                        </Button>
+                    </div>
+                </Form.Item>
+            </Form>
+        </div >
     )
 }
 
