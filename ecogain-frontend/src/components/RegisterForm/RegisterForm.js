@@ -40,9 +40,9 @@ const tailFormItemLayout = {
 const RegisterForm = () => {
     const [form] = Form.useForm();
 
-    const onFinish = (values) => {
-        console.log("Received values of form: ", values);
-    };
+    // const onFinish = (values) => {
+    //     console.log("Received values of form: ", values);
+    // };
 
     // state for form input
     const [name, setName] = useState('')
