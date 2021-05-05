@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import ReactDOM from "react-dom";
 import { useHistory } from 'react-router-dom';
 import "antd/dist/antd.css";
-import { Form, Input, Select, Checkbox, Button } from "antd";
+import { Form, Input, Select, Checkbox } from "antd";
 const { Option } = Select;
 
 
@@ -82,18 +81,20 @@ const RegisterForm = () => {
     // can do validation on password == password 2
     return (
         <div>
-            <Form {...formItemLayout} form={form} name="register" onFinish={onFinish} scrollToFirstError onSubmit={submitRegisterForm}>
+            <Form {...formItemLayout} form={form} name="register" onFinish={onFinish} scrollToFirstError>
+
                 <div>
                     <Form.Item name="Full Name" label="Full Name" tooltip="What is your Full Name?" rules={[{ required: true, message: "Please input your full name!", whitespace: true }]}>
                         <Input style={{ width: '350px', alignItems: 'center' }} value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="What is your full name?" />
                     </Form.Item>
-
                 </div>
+
                 <div>
                     <Form.Item name="Username" label="Username" tooltip="What do you want others to call you?" rules={[{ required: true, message: "Please input your username!", whitespace: true }]}>
                         <Input style={{ width: '350px', alignItems: 'center' }} value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Please enter a username" />
                     </Form.Item>
                 </div>
+
                 <div>
                     <Form.Item name="email" label="E-mail" tooltip="What is your email address?" rules={[{ type: "email", message: "The input is not valid E-mail!" }, { required: true, message: "Please input your E-mail!" }]}>
                         <Input style={{ width: '350px', alignItems: 'center' }} value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="What's your email?" />
@@ -132,14 +133,12 @@ const RegisterForm = () => {
                         I have read and accept EcoGain's <a href="">terms and conditions</a>
                     </Checkbox>
                 </Form.Item>
+
                 <div>
                     <Form.Item {...tailFormItemLayout}>
                         <Input style={{ width: '110px', height: '30px', align: 'center' }} type="submit" value="Register now" htmlType="submit" />
                     </Form.Item>
                 </div>
-
-
-
 
             </Form>
         </div>
