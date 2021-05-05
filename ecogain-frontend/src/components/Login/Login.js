@@ -63,7 +63,7 @@ const Login = () => {
 
 
 
-                <div class="input-group">
+                <div >
                     <Form.Item style={{ width: '350px', alignItems: 'center' }} name="username" rules={[{ required: true, message: 'Please input your Username!', },]} noStyle>
                         <Input style={{ width: '350px', alignItems: 'center' }} prefix={<UserOutlined className="site-form-item-icon" />} value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
                     </Form.Item>
