@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 const ActivitiesPage = (props) => {
     let category = props.match.params.category;
     const [activities, setActivities] = useState([])
-    // const [fetched, setFetched] = useState(false)
+    const [fetched, setFetched] = useState(false)
     const listOfActivities = []
 
     
@@ -14,15 +14,20 @@ const ActivitiesPage = (props) => {
             console.log(activitiesFromServer.activities); 
             // const activities = activitiesFromServer.activities;
            
-            activitiesFromServer.activities.forEach((activity) => {
-                listOfActivities.push(activity)
-            })
-            setActivities(listOfActivities)
-            console.log(listOfActivities)
+            //activitiesFromServer.activities.forEach((activity) => {
+            //    listOfActivities.push(activity)
+            //})
+            setActivities(activitiesFromServer.activities)
             console.log(activities)
+            if (activities.length > 0) {
+                console.log(activities)
+                setFetched(true)
+            }
+            // console.log(listOfActivities)
+            // console.log(activities)  jdhfsdkhjfjbdf
     };
     fetchFromAPI();
-    }, []);
+    }, [activities]);
 
         
     const fetchActivity = async (category) => {
@@ -40,14 +45,13 @@ const ActivitiesPage = (props) => {
     }
 
     return (
-        
-        <div className="activities-list">
-            {activities.map((activity) => {
-                <div key={activity.id} className="activity">
-                    <h4 value={activity.name} />
-                </div> 
-            })}
+        <div>
+            {fetched ? <div>
+                {activities.map((activity) => <div>{activity.name}</div>)}
+            </div> : 'loading'}
         </div>
+ 
+        
         
         
     )
