@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { useHistory } from 'react-router-dom'
-import Button from '../components/Button/Button'
+import { Menu, Button, Layout } from "antd";
+import Buttons from '../components/Button/Button'
+import Title from 'antd/lib/typography/Title';
+import { BrowserRouter as Router,  Redirect } from "react-router-dom";
+import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled, SecurityScanTwoTone } from '@ant-design/icons';
+import './Activities.css'
+import SubMenu from 'antd/lib/menu/SubMenu';
+
+
 
 const ActivitiesPage = (props) => {
     let category = props.match.params.category;
@@ -9,13 +17,14 @@ const ActivitiesPage = (props) => {
     const [fetched, setFetched] = useState(false)
     const listOfActivities = []
     const history = useHistory()
+    const { Header, Footer, Sider, Content } = Layout;
 
 
 
     useDeepCompareEffect(() => {
         const fetchFromAPI = async () => {
             const activitiesFromServer = await fetchActivity(category);
-            console.log(activitiesFromServer.activities); 
+            console.log(activitiesFromServer.activities);
             // const activities = activitiesFromServer.activities;
 
             //activitiesFromServer.activities.forEach((activity) => {
@@ -27,41 +36,93 @@ const ActivitiesPage = (props) => {
             }
             // console.log(listOfActivities)
             // console.log(activities)  jdhfsdkhjfjbdf
-    };
-    fetchFromAPI();
+        };
+        fetchFromAPI();
     }, [activities]);
 
 
     const fetchActivity = async (category) => {
         const res = await fetch(`http://localhost:5000/activities/${category}`, {
-        method: "GET",
+            method: "GET",
 
-        headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.json();
-    console.log(data)
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const data = await res.json();
+        console.log(data)
 
-    return data;
+        return data;
     }
 
     return (
         <div>
             {fetched ? <div>
-                {activities.map((activity) => 
-                <div>
-                    <div>{activity.name}</div>
-                    <div>{activity.activity_points}</div>
-                    <Button id={activity.id}/>
-                    
-                </div>)}
-            </div> : 'loading'}
-            <button onClick={() => history.push('/userdashboardpage')}>Go back</button>
+                <Router>
+                    <Layout>
+                        <Layout>
+                            <Header className="site-layout-background" style={{ padding: 9, backgroundColor: '#449BCD' }} >
+                                <Title style={{ color: 'white' }} level={2}>
+                                <h1 style={{ color: 'white', alignItems: "center" }}>
+                                EcoGain
+                                </h1>
+                                </Title>
+                            </Header>
+
+                            <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
+                                <div className="site-layout-background" style={{ minHeight: 380 }}>
+                            <h1 style={{textTransform: 'uppercase', fontSize: '45px',  fontWeight: 'bold', color: '#52BC3D'}}>{category}</h1>
+                        
+                            {activities.map((activity) =>
+                                <div>
+                                    <div>{activity.name}</div>
+                                    <div>{activity.activity_points}</div>
+                                    <Buttons style={{ width: '110px', height: '30px', align: 'center'}} id={activity.id} /> 
+                                </div>)}
+                                <div>
+                                    <Button type='primary' style={{ width: '110px', height: '30px', align: 'center' }} onClick={() => history.push('/userdashboardpage')}>Go back</Button> 
+                                </div>
+                                </div>
+                            </Content>
+                            <Footer style={{ textAlign: 'center', color: '#808080', fontSize: '20px' }}>©2021 EcoGain Ltd. <br /> <LinkedinFilled /> <FacebookFilled /> <InstagramFilled /> <AndroidFilled /> <AppleFilled /> <WindowsFilled /> </Footer>  
+                        </Layout>
+                   
+                    <Sider style={{ background: '#fff' }}>
+
+                        <Menu defaultSelectedKeys={['Dashboard']} mode="inline">
+                        <Menu.Item key='Dashboard' >
+                            <SubMenu key="MenuBar" title="Menu Bar" />
+                        </Menu.Item>
+
+                        <SubMenu key="MyProfile" icon={<UserOutlined />} title="My Profile">
+                            < Menu.Item key="ViewProfile" onClick={() => history.push('/userprofilepage')} >Profile </Menu.Item> 
+                        </SubMenu>
+
+                        <SubMenu key="EcoCategories" icon={<TableOutlined />} title="Eco Categories">
+                            <Menu.Item key="ViewCategories" onClick={() => history.push('/userdashboardpage')}>All categories </Menu.Item>
+                        </SubMenu>
+
+                        <SubMenu key="Leaderboard" icon={<StarOutlined />} title="LeaderBoard">
+                            <Menu.Item key="ViewLeaderboard" onClick={() => history.push('/leaderboardpage')}>View Leaderboard </Menu.Item>
+                        </SubMenu>
+
+                        <SubMenu key="Settings" icon={<SettingOutlined />} title="Settings">
+                            <Menu.Item key="AccountSettings">Account Settings</Menu.Item>
+                        </SubMenu>
+
+                        <SubMenu key="Logout" icon={<LogoutOutlined />} title="Logout">
+                            <Menu.Item key="LogoutButton" onClick={() => { localStorage.removeItem('token'); history.push('/')}}>Logout </Menu.Item>
+
+                        </SubMenu>
+
+                        </Menu>
+                    </Sider>
+                </Layout>
+
+                 </Router>
+            </div>: 'loading'} 
+              
         </div>
- 
-
-
 
     )
 }
