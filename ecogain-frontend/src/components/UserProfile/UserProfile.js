@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import './UserProfile.css';
+import Buttons from '../../components/Button/Button';
 import { useHistory } from 'react-router-dom';
 import { Layout, Menu, Progress } from 'antd';
 import { Radio, Input, Space } from 'antd';
@@ -40,7 +41,8 @@ const UserProfile = () => {
           if (user) {
             setUserPoints(user.total_points)
             
-            setMoney(user.total_points/100)
+            const moneyToSpend = (user.total_points/100).toFixed(2)
+            setMoney(moneyToSpend)
             setFetched(true)
             
             console.log(userPoints)
@@ -107,19 +109,19 @@ const UserProfile = () => {
                                                     <div className="level-section-title">Check Your Level!</div>
                                                     <div className="individual-level">
                                                         <div className="level-title"><CrownTwoTone spin style={{fontSize:'30px'}}twoToneColor="#f7eb09" />         Level 1 - Casually Environmental</div>
-                                                        {userPoints >= 100 ? <div className='achieved'>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >100    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
+                                                        {userPoints >= 100 ? <div className='achieved'>Achieved    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >100    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
                                                     </div>
                                                     <div className="individual-level">
                                                         <div className="level-title"><CrownTwoTone spin style={{fontSize:'30px'}}twoToneColor="#f7eb09" />         Level 2 - Green Bean</div>
-                                                        {userPoints >= 200 ? <div className='achieved'>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >200    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
+                                                        {userPoints >= 200 ? <div className='achieved'>Achieved    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >200    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
                                                     </div>
                                                     <div className="individual-level">
                                                         <div className="level-title"><CrownTwoTone spin style={{fontSize:'30px'}}twoToneColor="#f7eb09" />         Level 3 - Eco Activist</div>
-                                                        {userPoints >= 500 ? <div className='achieved'>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >500    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
+                                                        {userPoints >= 500 ? <div className='achieved'>Achieved    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >500    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
                                                     </div>
                                                     <div className="individual-level">
                                                         <div className="level-title"><CrownTwoTone spin style={{fontSize:'30px'}}twoToneColor="#f7eb09" />         Level 4 - Eco Warrior</div>
-                                                        {userPoints >= 1000 ? <div className='achieved'>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >1000    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
+                                                        {userPoints >= 1000 ? <div className='achieved'>Achieved    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >1000    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
                                                     </div>
                                                 </div>
                                                 <div className="rewards">

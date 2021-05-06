@@ -122,9 +122,33 @@
 
 .redeem-options {
   margin-bottom: 15px;
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;
 }
 
+.confirm-charity {
+  font-size: 15px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #04AA6D;
+  border: none;
+  border-radius: 15px;
+}
 
+  
+.confirm-voucher {
+  font-size: 15px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #04AA6D;
+  border: none;
+  border-radius: 15px;
+}
 
 
 /* .MenuUnfoldOutlined {
