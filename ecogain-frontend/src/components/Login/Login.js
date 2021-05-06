@@ -23,7 +23,7 @@ const Login = () => {
 
 
     // state for error
-    // const [formError, setFormError] = setError("")
+    const [loginError, setLoginError] = useState("")
 
     const loginUser = async (username, password) => {
 
@@ -41,8 +41,12 @@ const Login = () => {
 
         if (data.token !== null && data.token !== '' && data.token !== undefined) {
             localStorage.setItem('token', data.token)
+            setLoginError("")
             history.push('/userdashboardpage')
-        } // if the token is present and valid, user is directed to userdashboard page
+        } 
+        if (!data.token) {
+            setLoginError("Please enter a valid username and password.")
+        }// if the token is present and valid, user is directed to userdashboard page
 
     }
     // next step - keep the token when the browser is refreshed -> will need the token to be stored globally so it can be accessed by other components
@@ -110,6 +114,7 @@ const Login = () => {
                         </Button>
                     </div>
                 </Form.Item>
+                <div>{loginError}</div>
             </Form>
         </div >
     )
