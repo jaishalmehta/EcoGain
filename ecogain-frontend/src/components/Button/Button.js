@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Form } from "antd";
 
-const Button = (id) => {
+const Buttons = (id) => {
 
     const addPointsToUser = async (activityPoints) => {
 
@@ -49,4 +49,4 @@ const Button = (id) => {
     )
 }
 
-export default Button
+export default Buttons

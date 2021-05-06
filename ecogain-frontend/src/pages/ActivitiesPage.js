@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { useHistory } from 'react-router-dom'
-import { Button, Form } from "antd";
+import { Form } from "antd";
+import Buttons from '../components/Button/Button';
 
 
 const ActivitiesPage = (props) => {
@@ -56,11 +57,11 @@ const ActivitiesPage = (props) => {
                             <div>
                                 <div>{activity.name}</div>
                                 <div>{activity.activity_points}</div>
-                                <Button style={{ width: '110px', height: '30px', align: 'center' }} id={activity.id} />
+                                <Buttons style={{ width: '110px', height: '30px', align: 'center' }} id={activity.id} />
 
                             </div>)}
                     </div> : 'loading'}
-                    <Button style={{ width: '110px', height: '30px', align: 'center' }} onClick={() => history.push('/userdashboardpage')}>Go back</Button>
+                    <Buttons style={{ width: '110px', height: '30px', align: 'center' }} onClick={() => history.push('/userdashboardpage')}>Go back</Buttons>
                 </Form.Item>
             </Form>
 
