@@ -3,12 +3,16 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import './UserProfile.css';
 import { useHistory } from 'react-router-dom';
 import { Layout, Menu, Progress } from 'antd';
-import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled } from '@ant-design/icons';
+import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled, CheckCircleTwoTone } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { useState, useEffect } from 'react'
-import useDeepCompareEffect from 'use-deep-compare-effect'
+import useDeepCompareEffect from 'use-deep-compare-effect';
+import Earth from '../Images/Earth.png';
+
+
 const { Header, Footer, Sider, Content } = Layout;
+
 
 
 const UserProfile = () => {
@@ -64,15 +68,13 @@ const UserProfile = () => {
                         </Header>
 
                         <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
-
                             <div className="site-layout-background" style={{ minHeight: 380 }}>
-                                <div >
-                                    <StarTwoTone spin style={{ float: 'left', fontSize: '30px' }} /> <Progress percent={55} status="active" />
-                                </div>
-
-                                {fetched ? <>   <h1>{user.name}</h1> 
-                                            <h2>{user.username}</h2> 
-                                            <h5>{user.total_points}</h5> </> : 'loading profile'} 
+                                <div className="title">My Profile</div>
+                                <div className="earth-icon"><img src={Earth}/></div>
+                    
+                                {fetched ? <>   <div className = "name" >{user.name}</div> 
+                                                <div className = "username">{user.username}</div>
+                                                <div className = "points"><CheckCircleTwoTone twoToneColor="#52c41a" />     {user.total_points}</div> </> : 'loading profile'} 
                             </div>
 
                             
