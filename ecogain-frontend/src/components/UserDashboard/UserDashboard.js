@@ -69,7 +69,7 @@ const UserDashboard = () => {
                 <div>
 
                   <Row justify="space-around" className="Row">
-                    <button onClick={showModal} className="IconBtn"> <Col span={3} > <img src={transportation} alt="transportation" onClick={() => history.push('/activities/transport')} /> </Col> </button>
+                    <button className="IconBtn"> <Col span={3} > <img src={transportation} alt="transportation" onClick={showModal} /> </Col> </button>
                     <Modal title="Title" visible={visible} onOk={handleOk} confirmLoading={confirmLoading} onCancel={handleCancel}>
                       <p>{modalText}</p>
                     </Modal>
