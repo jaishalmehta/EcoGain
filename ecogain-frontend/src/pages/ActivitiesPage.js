@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { useHistory } from 'react-router-dom'
-import { Form } from "antd";
-import Buttons from '../components/Button/Button';
-
+import { Button, Form } from "antd";
+import Buttons from '../components/Button/Button'
 
 const ActivitiesPage = (props) => {
     let category = props.match.params.category;
@@ -50,21 +49,16 @@ const ActivitiesPage = (props) => {
 
     return (
         <div>
-            <Form>
-                <Form.Item>
-                    {fetched ? <div>
-                        {activities.map((activity) =>
-                            <div>
-                                <div>{activity.name}</div>
-                                <div>{activity.activity_points}</div>
-                                <Buttons style={{ width: '110px', height: '30px', align: 'center' }} id={activity.id} />
+            {fetched ? <div>
+                {activities.map((activity) =>
+                    <div>
+                        <div>{activity.name}</div>
+                        <div>{activity.activity_points}</div>
+                        <Buttons style={{ width: '110px', height: '30px', align: 'center' }} id={activity.id} />
 
-                            </div>)}
-                    </div> : 'loading'}
-                    <Buttons style={{ width: '110px', height: '30px', align: 'center' }} onClick={() => history.push('/userdashboardpage')}>Go back</Buttons>
-                </Form.Item>
-            </Form>
-
+                    </div>)}
+            </div> : 'loading'}
+            <Button type='primary' style={{ width: '110px', height: '30px', align: 'center' }} onClick={() => history.push('/userdashboardpage')}>Go back</Button>
         </div>
 
 
