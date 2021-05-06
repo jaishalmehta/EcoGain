@@ -53,7 +53,7 @@ const Login = () => {
     // upon form submission, need to try to log in, then route to user dashboard page
     // we might need to use the id of the user to push them to the user dashboard for their user
     // or maybe will just need id for pushing them to the user profile page
-    const loginFormSubmitted = async ( values) => {
+    const loginFormSubmitted = async (values) => {
         // e.preventDefault()
         console.log('yay')
         loginUser(username, password)
@@ -61,7 +61,7 @@ const Login = () => {
 
     return (
         <div>
-            <Form name="normal_login" className="login-form" initialValues={{ remember: true, }}  onFinish={( values) => loginFormSubmitted( values)}>
+            <Form name="normal_login" className="login-form" initialValues={{ remember: true, }} onFinish={(values) => loginFormSubmitted(values)}>
 
 
 
@@ -71,7 +71,7 @@ const Login = () => {
                     </Form.Item>
                 </div>
 
-
+                <br />
 
                 <div>
                     <Form.Item style={{ width: '350px', alignItems: 'center' }} name="password" rules={[{ required: true, message: 'Please input your Password!' },]} noStyle>
@@ -103,6 +103,7 @@ const Login = () => {
                             Login here
                         </Button>
                     </div>
+                    <br />
                     <div>
                         <Button style={{ width: '110px', height: '30px' }} onClick={() => history.push('/registerpage')}>
                             Register now

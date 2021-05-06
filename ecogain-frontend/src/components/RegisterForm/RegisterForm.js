@@ -1,8 +1,49 @@
-import React from 'react'
-import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import "antd/dist/antd.css";
+import { Form, Input, Select, Checkbox, Button } from "antd";
+const { Option } = Select;
+
+
+
+const formItemLayout = {
+    labelCol: {
+        xs: {
+            span: 24
+        },
+        sm: {
+            span: 10
+        }
+    },
+    wrapperCol: {
+        xs: {
+            span: 24
+        },
+        sm: {
+            span: 6
+        }
+    }
+};
+const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+            span: 24,
+            offset: 0
+        },
+        sm: {
+            span: 16,
+            offset: 5
+        }
+    }
+};
 
 const RegisterForm = () => {
+    const [form] = Form.useForm();
+
+    // const onFinish = (values) => {
+    //     console.log("Received values of form: ", values);
+    // };
+
     // state for form input
     const [name, setName] = useState('')
     const [username, setUsername] = useState('')
@@ -29,8 +70,8 @@ const RegisterForm = () => {
     }
 
 
-    const submitRegisterForm = (e) => {
-        e.preventDefault()
+    const onFinish = (e) => {
+        
         // can do validation on password == password 2
         // call func to do POST request to make new user
         makeNewUser({ name, username, email, passwordOne })
@@ -40,29 +81,74 @@ const RegisterForm = () => {
     // can do validation on password == password 2
     return (
         <div>
-            <form onSubmit={submitRegisterForm}>
-                <div class="input-group">
-                    <label>Full name</label>
-                    <input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="What's your name?" />
+            <Form {...formItemLayout} form={form} name="register" onFinish={onFinish} scrollToFirstError>
+
+                <div>
+                    <Form.Item name="Full Name" label="Full Name" tooltip="What is your Full Name?" rules={[{ required: true, message: "Please input your full name!", whitespace: true }]}>
+                        <Input style={{ width: '350px', alignItems: 'center' }} value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="What is your full name?" />
+                    </Form.Item>
                 </div>
-                <div class="input-group">
-                    <label>Username</label>
-                    <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="PLease enter a username" />
+
+                <div>
+                    <Form.Item name="Username" label="Username" tooltip="What do you want others to call you?" rules={[{ required: true, message: "Please input your username!", whitespace: true }]}>
+                        <Input style={{ width: '350px', alignItems: 'center' }} value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Please enter a username" />
+                    </Form.Item>
                 </div>
-                <div class="input-group">
-                    <label>Email</label>
-                    <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="What's your email?" />
+
+                <div>
+                    <Form.Item name="email" label="E-mail" tooltip="What is your email address?" rules={[{ type: "email", message: "The input is not valid E-mail!" }, { required: true, message: "Please input your E-mail!" }]}>
+                        <Input style={{ width: '350px', alignItems: 'center' }} value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="What's your email?" />
+                    </Form.Item>
                 </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <input value={passwordOne} onChange={(e) => setPasswordOne(e.target.value)} type="text" placeholder="PLease enter a password" />
+
+                <div>
+                    <Form.Item name="password" label="Password" tooltip="Please select a password." rules={[{ required: true, message: "Please input your password!" }]}  >
+                        <Input.Password style={{ width: '350px', alignItems: 'center' }} value={passwordOne} onChange={(e) => setPasswordOne(e.target.value)} type="text" placeholder="Please enter a password" />
+                    </Form.Item>
                 </div>
-                <div class="input-group">
-                    <label>Confirm Password</label>
-                    <input value={passwordTwo} onChange={(e) => setPasswordTwo(e.target.value)} type="text" placeholder="Please repeat your password" />
+
+                <div>
+                    <Form.Item name="confirm" label="Confirm Password" tooltip="Please re-enter your selected password." dependencies={["password"]}
+                        rules={[
+                            { required: true, message: "Please confirm your password!" },
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (!value || getFieldValue("password") === value) {
+                                        return Promise.resolve();
+                                    }
+
+                                    return Promise.reject(
+                                        new Error("The two passwords entered do not match!")
+                                    );
+                                }
+                            })
+                        ]}
+                    >
+                        <Input.Password style={{ width: '350px', alignItems: 'center' }} value={passwordTwo} onChange={(e) => setPasswordTwo(e.target.value)} type="text" placeholder="Please repeat your password" />
+                    </Form.Item>
                 </div>
-                <input type="submit" value="Register now" />
-            </form>
+
+                <Form.Item name="terms and conditions" valuePropName="checked" rules={[{ validator: (_, value) => value ? Promise.resolve() : Promise.reject(new Error("Please accept the terms and conditions")) }]} {...tailFormItemLayout}>
+                    <Checkbox style={{ width: '250px', align: 'center' }}>
+                        I have read and accept EcoGain's <a href="">terms and conditions</a>
+                    </Checkbox>
+                </Form.Item>
+
+                <div>
+                    <Form.Item {...tailFormItemLayout}>
+                        <div>
+                            <Input style={{ width: '110px', height: '30px', align: 'center' }} type="submit" value="Register now" htmlType="submit" />
+                        </div>
+                        <br />
+                        <div>
+                            <Button style={{ width: '110px', height: '30px', align: 'center' }} onClick={() => history.push('/')}>
+                                Go back
+                        </Button>
+                        </div>
+                    </Form.Item>
+                </div>
+
+            </Form>
         </div>
     )
 }
