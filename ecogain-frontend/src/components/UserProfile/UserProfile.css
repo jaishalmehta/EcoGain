@@ -9,14 +9,11 @@
   position:relative;
  }
 
-
-
  .IconBtn {
    background: #fff;
    border-radius: 20px;
    border-color: #f1f2f5;
    box-shadow: 5px 5px  #ced0d4;
-  
  }
 /*
 #components-layout-trigger .trigger {
@@ -80,6 +77,7 @@
 }
 
 .individual-level {
+  font-size: 20px;
   padding-bottom: 20px;
 }
 
@@ -106,6 +104,26 @@
   font-size: 25px;
   padding-bottom: 15px;
 }
+
+.money-displayed {
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+
+.reward-section {
+  margin-bottom: 60px;
+}
+
+.radio {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.redeem-options {
+  margin-bottom: 15px;
+}
+
 
 
 
