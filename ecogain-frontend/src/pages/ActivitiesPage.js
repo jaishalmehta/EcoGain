@@ -49,16 +49,21 @@ const ActivitiesPage = (props) => {
 
     return (
         <div>
-            {fetched ? <div>
-                {activities.map((activity) =>
-                    <div>
-                        <div>{activity.name}</div>
-                        <div>{activity.activity_points}</div>
-                        <Button style={{ width: '110px', height: '30px', align: 'center' }} id={activity.id} />
+            <Form>
+                <Form.Item>
+                    {fetched ? <div>
+                        {activities.map((activity) =>
+                            <div>
+                                <div>{activity.name}</div>
+                                <div>{activity.activity_points}</div>
+                                <Button style={{ width: '110px', height: '30px', align: 'center' }} id={activity.id} />
 
-                    </div>)}
-            </div> : 'loading'}
-            <Button style={{ width: '110px', height: '30px', align: 'center' }} onClick={() => history.push('/userdashboardpage')}>Go back</Button>
+                            </div>)}
+                    </div> : 'loading'}
+                    <Button style={{ width: '110px', height: '30px', align: 'center' }} onClick={() => history.push('/userdashboardpage')}>Go back</Button>
+                </Form.Item>
+            </Form>
+
         </div>
 
 
