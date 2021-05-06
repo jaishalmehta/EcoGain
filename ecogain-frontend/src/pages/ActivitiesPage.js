@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { useHistory } from 'react-router-dom'
+import { Button } from "antd";
 import Button from '../components/Button/Button'
 
 const ActivitiesPage = (props) => {
@@ -15,7 +16,7 @@ const ActivitiesPage = (props) => {
     useDeepCompareEffect(() => {
         const fetchFromAPI = async () => {
             const activitiesFromServer = await fetchActivity(category);
-            console.log(activitiesFromServer.activities); 
+            console.log(activitiesFromServer.activities);
             // const activities = activitiesFromServer.activities;
 
             //activitiesFromServer.activities.forEach((activity) => {
@@ -27,39 +28,39 @@ const ActivitiesPage = (props) => {
             }
             // console.log(listOfActivities)
             // console.log(activities)  jdhfsdkhjfjbdf
-    };
-    fetchFromAPI();
+        };
+        fetchFromAPI();
     }, [activities]);
 
 
     const fetchActivity = async (category) => {
         const res = await fetch(`http://localhost:5000/activities/${category}`, {
-        method: "GET",
+            method: "GET",
 
-        headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.json();
-    console.log(data)
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const data = await res.json();
+        console.log(data)
 
-    return data;
+        return data;
     }
 
     return (
         <div>
             {fetched ? <div>
-                {activities.map((activity) => 
-                <div>
-                    <div>{activity.name}</div>
-                    <div>{activity.activity_points}</div>
-                    <Button id={activity.id}/>
-                    
-                </div>)}
+                {activities.map((activity) =>
+                    <div>
+                        <div>{activity.name}</div>
+                        <div>{activity.activity_points}</div>
+                        <Button style={{ width: '110px', height: '30px', align: 'center' }} id={activity.id} />
+
+                    </div>)}
             </div> : 'loading'}
-            <button onClick={() => history.push('/userdashboardpage')}>Go back</button>
+            <Button style={{ width: '110px', height: '30px', align: 'center' }} onClick={() => history.push('/userdashboardpage')}>Go back</Button>
         </div>
- 
+
 
 
 
