@@ -75,7 +75,7 @@ const Login = () => {
 
                 <div>
                     <Form.Item style={{ width: '350px', alignItems: 'center' }} name="password" rules={[{ required: true, message: 'Please input your Password!' },]} noStyle>
-                        <Input style={{ width: '350px', alignItems: 'center' }} prefix={<LockOutlined className="site-form-item-icon" />} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+                        <Input.Password style={{ width: '350px', alignItems: 'center' }} prefix={<LockOutlined className="site-form-item-icon" />} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
                     </Form.Item>
                 </div>
                 <br />
