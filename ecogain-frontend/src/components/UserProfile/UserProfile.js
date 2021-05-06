@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import './UserProfile.css';
 import { useHistory } from 'react-router-dom';
 import { Layout, Menu, Progress } from 'antd';
+import { Radio, Input, Space } from 'antd';
 import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled, CheckCircleTwoTone, CrownTwoTone, TrophyTwoTone } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -23,6 +24,8 @@ const UserProfile = () => {
     const [fetched, setFetched] = useState(false)
     const [userPoints, setUserPoints] = useState()
     const [money, setMoney] = useState()
+    const [wantsToDonate, setWantsToDonate] = useState(false)
+    const [chosenCharity, setChosenCharity] = useState('')
 
     useDeepCompareEffect(() => {
         const fetchFromAPI = async () => {
@@ -33,6 +36,7 @@ const UserProfile = () => {
           
           if (user) {
             setUserPoints(user.total_points)
+            
             setMoney(user.total_points/100)
             setFetched(true)
             
@@ -105,9 +109,24 @@ const UserProfile = () => {
                                                 </div>
                                                 <div className="rewards">
                                                     <div className ="rewards-title">Redeem Your Rewards!</div>
-                                                    <div className = "money-displayed">You have £{money} to redeem.</div>
-                                                    <div><button className = "redeem-options">Donate to Charity</button></div>
-                                                    <div><button className = "redeem-options">Redeem as Gift Voucher</button></div>
+                                                    {money == 0 ? <> <div className = "money-displayed">You have £0.00 to redeem.</div>
+                                                    <div>Complete some sustainable activities to earn points!</div> </>
+                                                    : <> <div className = "money-displayed">You have £{money} to redeem.</div>
+                                                     </>
+                                                    }
+                                                    {money == 0 ? '' :
+                                                    <><div>
+                                                        <button className = "redeem-options" onClick={()=> setWantsToDonate(true)}>Donate to Charity</button>
+                                                        {wantsToDonate ?       <Radio.Group onChange={(e)=>setChosenCharity(e.target.value)} value={chosenCharity}>
+                                                                                    <Space direction="vertical">
+                                                                                    <Radio value={1}>Option A</Radio>
+                                                                                    <Radio value={2}>Option B</Radio>
+                                                                                    <Radio value={3}>Option C</Radio>
+                                                                                    </Space>
+                                                                                </Radio.Group>:''}
+                                                    </div>
+                                                    <div><button className = "redeem-options">Redeem as Gift Voucher</button></div></>}
+                                                    
                                                 </div>
                                             </div> : ''}
                             </div>
