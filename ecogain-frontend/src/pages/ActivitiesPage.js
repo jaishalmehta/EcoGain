@@ -57,7 +57,7 @@ const ActivitiesPage = (props) => {
 
     return (
         <div>
-            {fetched ? <div className="site-layout-background" style={{ minHeight: 380 }}>
+            {fetched ? <div>
                 <Router>
                     <Layout>
                         <Layout>
@@ -69,7 +69,8 @@ const ActivitiesPage = (props) => {
                                 </Title>
                             </Header>
 
-                            <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}></Content>
+                            <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
+                                <div className="site-layout-background" style={{ minHeight: 380 }}>
                             <h2>{category}</h2>
                         
                             {activities.map((activity) =>
@@ -81,7 +82,8 @@ const ActivitiesPage = (props) => {
                                 <div>
                                     <Button type='primary' style={{ width: '110px', height: '30px', align: 'center' }} onClick={() => history.push('/userdashboardpage')}>Go back</Button> 
                                 </div>
-
+                                </div>
+                            </Content>
                             <Footer style={{ textAlign: 'center', color: '#808080', fontSize: '20px' }}>©2021 EcoGain Ltd. <br /> <LinkedinFilled /> <FacebookFilled /> <InstagramFilled /> <AndroidFilled /> <AppleFilled /> <WindowsFilled /> </Footer>  
                         </Layout>
                    
