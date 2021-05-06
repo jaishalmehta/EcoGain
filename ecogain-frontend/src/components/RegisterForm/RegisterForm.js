@@ -71,7 +71,7 @@ const RegisterForm = () => {
 
 
     const onFinish = (e) => {
-        e.preventDefault()
+        
         // can do validation on password == password 2
         // call func to do POST request to make new user
         makeNewUser({ name, username, email, passwordOne })
