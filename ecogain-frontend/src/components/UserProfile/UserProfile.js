@@ -11,10 +11,7 @@ import { useState, useEffect } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import Earth from '../Images/Earth.png';
 
-
 const { Header, Footer, Sider, Content } = Layout;
-
-
 
 const UserProfile = () => {
     const { Header, Footer, Sider, Content } = Layout;
@@ -24,8 +21,14 @@ const UserProfile = () => {
     const [fetched, setFetched] = useState(false)
     const [userPoints, setUserPoints] = useState()
     const [money, setMoney] = useState()
+
     const [wantsToDonate, setWantsToDonate] = useState(false)
     const [chosenCharity, setChosenCharity] = useState('')
+    const [thankYouMessage, setThankYouMessage] = useState('')
+
+    const [wantsToRedeem, setWantsToRedeem] = useState(false)
+    const [chosenVoucher, setChosenVoucher] = useState('')
+    const [enjoyVoucher, setEnjoyVoucher] = useState('')
 
     useDeepCompareEffect(() => {
         const fetchFromAPI = async () => {
@@ -61,7 +64,20 @@ const UserProfile = () => {
     console.log(data)
     return data;
   };
-    
+
+  const confirmsToDonation = () => {
+        setWantsToDonate(false)
+        setMoney(0)
+        setUserPoints(0)
+        setThankYouMessage('Thank you for your donation!')
+  }
+
+  const confirmsVoucher = () => {
+        setWantsToRedeem(false)
+        setMoney(0)
+        setUserPoints(0)
+        setEnjoyVoucher('Enjoy your gift voucher!')
+  }
 
     return (
         <div className="App">
@@ -74,10 +90,9 @@ const UserProfile = () => {
                             <Title style={{ color: 'white' }} level={2}>
                                 <h1 style={{ color: 'white', alignItems: "center" }}>
                                     EcoGain
-                </h1>
+                                </h1>
                             </Title>
                         </Header>
-
                         <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
                             <div className="site-layout-background" style={{ minHeight: 380 }}>
                                 <div className="title">My Profile</div>
@@ -85,7 +100,7 @@ const UserProfile = () => {
                     
                                 {fetched ? <>   <div className = "name" >{user.name}</div> 
                                                 <div className = "username">{user.username}</div>
-                                                <div className = "points"><CheckCircleTwoTone twoToneColor="#52c41a" />     {user.total_points}</div> </> : 'loading profile'} 
+                                                <div className = "points"><CheckCircleTwoTone twoToneColor="#52c41a" />     {userPoints}</div> </> : 'loading profile'} 
 
                                 {fetched ? <div className="container-levels-rewards">
                                                 <div className="level-display">
@@ -115,25 +130,36 @@ const UserProfile = () => {
                                                      </>
                                                     }
                                                     {money == 0 ? '' :
-                                                    <><div>
+                                                    <> <div className = "reward-section" >
                                                         <button className = "redeem-options" onClick={()=> setWantsToDonate(true)}>Donate to Charity</button>
-                                                        {wantsToDonate ?       <Radio.Group onChange={(e)=>setChosenCharity(e.target.value)} value={chosenCharity}>
+                                                        {wantsToDonate ?     <div>  <Radio.Group className ="radio" onChange={(e)=>setChosenCharity(e.target.value)} value={chosenCharity}>
                                                                                     <Space direction="vertical">
-                                                                                    <Radio value={1}>Option A</Radio>
-                                                                                    <Radio value={2}>Option B</Radio>
-                                                                                    <Radio value={3}>Option C</Radio>
+                                                                                    <Radio value={1}>Rainforest Alliance</Radio>
+                                                                                    <Radio value={2}>Greenpeace Environmental Trust</Radio>
+                                                                                    <Radio value={3}>WWF</Radio>
                                                                                     </Space>
-                                                                                </Radio.Group>:''}
+                                                                                </Radio.Group> 
+                                                                                <div><button className = "confirm-charity" onClick ={confirmsToDonation}>Confirm Charity</button></div>
+                                                                            </div> :'' } 
                                                     </div>
-                                                    <div><button className = "redeem-options">Redeem as Gift Voucher</button></div></>}
-                                                    
+                                                    <div><button className = "redeem-options" onClick={() => setWantsToRedeem(true)}>Redeem as Gift Voucher</button>
+                                                    {wantsToRedeem ? <div>  <Radio.Group className ="radio" onChange={(e)=>setChosenVoucher(e.target.value)} value={chosenVoucher}>
+                                                                                    <Space direction="vertical">
+                                                                                    <Radio value={1}>Loop</Radio>
+                                                                                    <Radio value={2}>Ocean Bottle</Radio>
+                                                                                    <Radio value={3}>Sustainable Jungle</Radio>
+                                                                                    </Space>
+                                                                                </Radio.Group> 
+                                                                                <div><button className = "confirm-voucher" onClick ={confirmsVoucher}>Confirm Voucher</button></div>
+                                                                            </div> :'' }
+                                                    </div> 
+                                                    </> }
+                                                    <div>{thankYouMessage}</div>
+                                                    <div>{enjoyVoucher}</div>
                                                 </div>
                                             </div> : ''}
                             </div>
-
-                            
                         </Content>
-
                         <Footer style={{ textAlign: 'center', color: '#808080', fontSize: '20px' }}>©2021 EcoGain Ltd. <br /> <LinkedinFilled /> <FacebookFilled /> <InstagramFilled /> <AndroidFilled /> <AppleFilled /> <WindowsFilled /> </Footer>
                     </Layout>
                     <Sider style={{ background: '#fff' }}>
@@ -161,9 +187,7 @@ const UserProfile = () => {
 
                             <SubMenu key="Logout" icon={<LogoutOutlined />} title="Logout">
                                 <Menu.Item key="LogoutButton" onClick={() => { localStorage.removeItem('token'); history.push('/')}}>Logout </Menu.Item>
-
                             </SubMenu>
-
                         </Menu>
                     </Sider>
                 </Layout>
@@ -171,7 +195,6 @@ const UserProfile = () => {
         </div >
     );
 }
-
 
 export default UserProfile;
 
