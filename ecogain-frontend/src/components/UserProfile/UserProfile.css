@@ -102,6 +102,11 @@
   flex: 1;
 }
 
+.rewards-title {
+  font-size: 25px;
+  padding-bottom: 15px;
+}
+
 /* .MenuUnfoldOutlined {
   align-items: right;
 }  */

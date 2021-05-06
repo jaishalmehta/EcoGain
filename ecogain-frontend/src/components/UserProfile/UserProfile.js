@@ -22,6 +22,7 @@ const UserProfile = () => {
     const [user, setUser ] = useState({})
     const [fetched, setFetched] = useState(false)
     const [userPoints, setUserPoints] = useState()
+    const [money, setMoney] = useState()
 
     useDeepCompareEffect(() => {
         const fetchFromAPI = async () => {
@@ -32,9 +33,11 @@ const UserProfile = () => {
           
           if (user) {
             setUserPoints(user.total_points)
+            setMoney(user.total_points/100)
             setFetched(true)
             
-            console.log(userPoints) //
+            console.log(userPoints)
+            console.log(money) //
           }
           
     };
@@ -89,19 +92,22 @@ const UserProfile = () => {
                                                     </div>
                                                     <div className="individual-level">
                                                         <div className="level-title"><CrownTwoTone spin style={{fontSize:'30px'}}twoToneColor="#f7eb09" />         Level 2 - Green Bean</div>
-                                                        {userPoints >= 200 ? <div>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >200    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
+                                                        {userPoints >= 200 ? <div className='achieved'>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >200    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
                                                     </div>
                                                     <div className="individual-level">
                                                         <div className="level-title"><CrownTwoTone spin style={{fontSize:'30px'}}twoToneColor="#f7eb09" />         Level 3 - Eco Activist</div>
-                                                        {userPoints >= 500 ? <div>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >500    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
+                                                        {userPoints >= 500 ? <div className='achieved'>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >500    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
                                                     </div>
                                                     <div className="individual-level">
                                                         <div className="level-title"><CrownTwoTone spin style={{fontSize:'30px'}}twoToneColor="#f7eb09" />         Level 4 - Eco Warrior</div>
-                                                        {userPoints >= 1000 ? <div>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >1000    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
+                                                        {userPoints >= 1000 ? <div className='achieved'>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >1000    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
                                                     </div>
                                                 </div>
                                                 <div className="rewards">
-                                                    <div>Redeem Your Rewards!</div>
+                                                    <div className ="rewards-title">Redeem Your Rewards!</div>
+                                                    <div className = "money-displayed">You have £{money} to redeem.</div>
+                                                    <div><button className = "redeem-options">Donate to Charity</button></div>
+                                                    <div><button className = "redeem-options">Redeem as Gift Voucher</button></div>
                                                 </div>
                                             </div> : ''}
                             </div>
