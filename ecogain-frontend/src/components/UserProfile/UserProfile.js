@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import './UserProfile.css';
 import { useHistory } from 'react-router-dom';
 import { Layout, Menu, Progress } from 'antd';
-import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled, CheckCircleTwoTone } from '@ant-design/icons';
+import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled, CheckCircleTwoTone, CrownTwoTone, TrophyTwoTone } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { useState, useEffect } from 'react'
@@ -21,6 +21,7 @@ const UserProfile = () => {
 
     const [user, setUser ] = useState({})
     const [fetched, setFetched] = useState(false)
+    const [userPoints, setUserPoints] = useState()
 
     useDeepCompareEffect(() => {
         const fetchFromAPI = async () => {
@@ -30,7 +31,10 @@ const UserProfile = () => {
           setUser(userFromServer);
           
           if (user) {
-            setFetched(true) //
+            setUserPoints(user.total_points)
+            setFetched(true)
+            
+            console.log(userPoints) //
           }
           
     };
@@ -75,6 +79,31 @@ const UserProfile = () => {
                                 {fetched ? <>   <div className = "name" >{user.name}</div> 
                                                 <div className = "username">{user.username}</div>
                                                 <div className = "points"><CheckCircleTwoTone twoToneColor="#52c41a" />     {user.total_points}</div> </> : 'loading profile'} 
+
+                                {fetched ? <div className="container-levels-rewards">
+                                                <div className="level-display">
+                                                    <div className="level-section-title">Check Your Level!</div>
+                                                    <div className="individual-level">
+                                                        <div className="level-title"><CrownTwoTone spin style={{fontSize:'30px'}}twoToneColor="#f7eb09" />         Level 1 - Casually Environmental</div>
+                                                        {userPoints >= 100 ? <div className='achieved'>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >100    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
+                                                    </div>
+                                                    <div className="individual-level">
+                                                        <div className="level-title"><CrownTwoTone spin style={{fontSize:'30px'}}twoToneColor="#f7eb09" />         Level 2 - Green Bean</div>
+                                                        {userPoints >= 200 ? <div>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >200    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
+                                                    </div>
+                                                    <div className="individual-level">
+                                                        <div className="level-title"><CrownTwoTone spin style={{fontSize:'30px'}}twoToneColor="#f7eb09" />         Level 3 - Eco Activist</div>
+                                                        {userPoints >= 500 ? <div>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >500    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
+                                                    </div>
+                                                    <div className="individual-level">
+                                                        <div className="level-title"><CrownTwoTone spin style={{fontSize:'30px'}}twoToneColor="#f7eb09" />         Level 4 - Eco Warrior</div>
+                                                        {userPoints >= 1000 ? <div>Achieved!!    <TrophyTwoTone twoToneColor="#ffc500" /></div> : <div className="level-points" >1000    <CheckCircleTwoTone twoToneColor="#52c41a" /></div>}
+                                                    </div>
+                                                </div>
+                                                <div className="rewards">
+                                                    <div>Redeem Your Rewards!</div>
+                                                </div>
+                                            </div> : ''}
                             </div>
 
                             

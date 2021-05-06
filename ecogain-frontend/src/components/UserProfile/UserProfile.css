@@ -64,6 +64,44 @@
 
 }
 
+.container-levels-rewards {
+  display: flex;
+  padding-top: 20px;
+}
+
+.level-section-title {
+  font-size: 25px;
+  padding-bottom: 15px;
+}
+
+.level-display {
+  flex: 1;
+  
+}
+
+.individual-level {
+  padding-bottom: 20px;
+}
+
+.level-title {
+  text-align: left;
+  margin-left: 30px;
+}
+
+.level-points {
+  text-align: left;
+  margin-left: 65px;
+}
+
+.achieved {
+  text-align: left;
+  margin-left: 65px;
+}
+
+.rewards {
+  flex: 1;
+}
+
 /* .MenuUnfoldOutlined {
   align-items: right;
 }  */
