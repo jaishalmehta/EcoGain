@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Form } from "antd";
 
+
 const Buttons = (id) => {
 
     const addPointsToUser = async (activityPoints) => {
