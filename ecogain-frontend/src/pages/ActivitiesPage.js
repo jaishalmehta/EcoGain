@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { useHistory } from 'react-router-dom'
-import { Button } from "antd";
-import Button from '../components/Button/Button'
+import { Button, Form } from "antd";
+
 
 const ActivitiesPage = (props) => {
     let category = props.match.params.category;
