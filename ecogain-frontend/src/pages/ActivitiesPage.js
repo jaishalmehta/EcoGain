@@ -6,7 +6,7 @@ import Buttons from '../components/Button/Button'
 import Title from 'antd/lib/typography/Title';
 import { BrowserRouter as Router,  Redirect } from "react-router-dom";
 import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled, SecurityScanTwoTone } from '@ant-design/icons';
-import '../components/ActivitiesPage/Activities.css'
+import './Activities.css'
 import SubMenu from 'antd/lib/menu/SubMenu';
 
 
@@ -71,7 +71,7 @@ const ActivitiesPage = (props) => {
 
                             <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
                                 <div className="site-layout-background" style={{ minHeight: 380 }}>
-                            <h2>{category}</h2>
+                            <h1 style={{textTransform: 'uppercase', fontSize: '45px',  fontWeight: 'bold', color: '#52BC3D'}}>{category}</h1>
                         
                             {activities.map((activity) =>
                                 <div>
