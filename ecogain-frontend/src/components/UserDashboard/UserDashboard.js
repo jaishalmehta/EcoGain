@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router,  Redirect } from "react-router-dom";
 
-import { useState } from 'react';
+import { useState, } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import './UserDashboard.css';
 import { Layout, Menu, Progress, Row, Col, } from 'antd';
 import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled } from '@ant-design/icons';
@@ -22,6 +23,45 @@ import reuse from '../Images/reuse.svg';
 const UserDashboard = () => {
   const { Header, Footer, Sider, Content } = Layout;
   const history = useHistory()
+  const [progressBar, setProgressBar] = useState({})
+  const [user, setUser] = useState({})
+  const [fetched, setFetched] = useState(false)
+
+
+  useDeepCompareEffect(() => {
+    const fetchFromAPI = async () => {
+      const token = localStorage.getItem('token')
+      const userFromServer = await fetchUser(token);
+
+      setUser(userFromServer);
+      
+      if (user) {
+        setFetched(true) 
+        const progress = user.total_points
+        const progressPercentage = Math.round((progress / 1000) * 100)
+        console.log(progressPercentage)
+        setProgressBar(progressPercentage)
+        console.log(setProgressBar)
+      }
+      
+};
+    fetchFromAPI();
+}, [user]);
+
+const fetchUser = async (token) => {
+  const res = await fetch('http://localhost:5000/current_user', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+     "x-access-token": token,
+    },
+  });
+  const data = await res.json();
+  console.log(data)
+  return data;
+};
+
+  
 
   return (
     <div className="App">
@@ -41,7 +81,7 @@ const UserDashboard = () => {
 
               <div className="site-layout-background" style={{ minHeight: 380 }}>
                 <div >
-                  <StarTwoTone spin style={{ float: 'left', fontSize: '30px' }} /> <Progress percent={55} status="active" />
+                  <StarTwoTone spin style={{ float: 'left', fontSize: '30px' }} /> <Progress percent={progressBar} status="active" />
                 </div>
                 <div>
 
