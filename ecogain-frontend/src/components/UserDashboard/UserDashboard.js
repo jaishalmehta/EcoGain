@@ -1,10 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router,  Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Redirect } from "react-router-dom";
 
 import { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import './UserDashboard.css';
-import { Layout, Menu, Progress, Row, Col, } from 'antd';
+import { Layout, Menu, Progress, Row, Col, Modal } from 'antd';
 import { UserOutlined, StarOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined, SettingOutlined, TableOutlined, StarTwoTone, LinkedinFilled, FacebookFilled, InstagramFilled, AndroidFilled, AppleFilled, WindowsFilled } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -19,9 +19,32 @@ import reduce from '../Images/reduce.svg';
 import tshirt from '../Images/tshirt.svg';
 import reuse from '../Images/reuse.svg';
 
+
 const UserDashboard = () => {
   const { Header, Footer, Sider, Content } = Layout;
   const history = useHistory()
+
+  const [visible, setVisible] = React.useState(false);
+  const [confirmLoading, setConfirmLoading] = React.useState(false);
+  const [modalText, setModalText] = React.useState("Content of the modal");
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = () => {
+    setModalText("The modal will be closed after two seconds");
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setVisible(false);
+  };
 
   return (
     <div className="App">
@@ -46,21 +69,24 @@ const UserDashboard = () => {
                 <div>
 
                   <Row justify="space-around" className="Row">
-                    <button className="IconBtn"> <Col span={3} > <img src={transportation} alt="transportation" onClick={() => history.push('/activities/transport')} /> </Col> </button>
-                    <button className="IconBtn"> <Col span={3} > <img src={harvest} alt="harvest" onClick={() => history.push('/activities/food')}/> </Col> </button>
-                    <button className="IconBtn"> <Col span={3} > <img src={animals} alt="animals" onClick={() => history.push('/activities/food')}/> </Col> </button>
+                    <button onClick={showModal} className="IconBtn"> <Col span={3} > <img src={transportation} alt="transportation" onClick={() => history.push('/activities/transport')} /> </Col> </button>
+                    <Modal title="Title" visible={visible} onOk={handleOk} confirmLoading={confirmLoading} onCancel={handleCancel}>
+                      <p>{modalText}</p>
+                    </Modal>
+                    <button onClick={showModal} className="IconBtn"> <Col span={3} > <img src={harvest} alt="harvest" onClick={() => history.push('/activities/food')} /> </Col> </button>
+                    <button onClick={showModal} className="IconBtn"> <Col span={3} > <img src={animals} alt="animals" onClick={() => history.push('/activities/food')} /> </Col> </button>
                   </Row>
 
                   <Row justify="space-around" className="Row">
-                    <button className="IconBtn"> <Col span={3} > <img src={tshirt} alt="tshirt" onClick={() => history.push('/activities/clothing')}/> </Col> </button>
-                    <button className="IconBtn"> <Col span={3}> <img src={reduce} alt="reduce" onClick={() => history.push('/activities/reuse')}/> </Col> </button>
-                    <button className="IconBtn"> <Col span={3}> <img src={recycle} alt="recycle" onClick={() => history.push('/activities/recycle')}/> </Col> </button>
+                    <button onClick={showModal} className="IconBtn"> <Col span={3} > <img src={tshirt} alt="tshirt" onClick={() => history.push('/activities/clothing')} /> </Col> </button>
+                    <button onClick={showModal} className="IconBtn"> <Col span={3}> <img src={reduce} alt="reduce" onClick={() => history.push('/activities/reuse')} /> </Col> </button>
+                    <button onClick={showModal} className="IconBtn"> <Col span={3}> <img src={recycle} alt="recycle" onClick={() => history.push('/activities/recycle')} /> </Col> </button>
                   </Row>
 
                   <Row justify="space-around" className="Row">
-                    <button className="IconBtn"> <Col span={3}> <img src={energy} alt="energy" onClick={() => history.push('/activities/energy')}/> </Col> </button>
-                    <button className="IconBtn"> <Col span={3}> <img src={plants} alt="plants" /> </Col> </button>
-                    <button className="IconBtn"> <Col span={3}> <img src={other} alt="other" /> </Col> </button>
+                    <button onClick={showModal} className="IconBtn"> <Col span={3}> <img src={energy} alt="energy" onClick={() => history.push('/activities/energy')} /> </Col> </button>
+                    <button onClick={showModal} className="IconBtn"> <Col span={3}> <img src={plants} alt="plants" /> </Col> </button>
+                    <button onClick={showModal} className="IconBtn"> <Col span={3}> <img src={other} alt="other" /> </Col> </button>
                   </Row>
 
 
@@ -80,7 +106,7 @@ const UserDashboard = () => {
               </Menu.Item>
 
               <SubMenu key="MyProfile" icon={<UserOutlined />} title="My Profile">
-                < Menu.Item key="ViewProfile" onClick={() => history.push('/userprofilepage')} >Profile </Menu.Item> 
+                < Menu.Item key="ViewProfile" onClick={() => history.push('/userprofilepage')} >Profile </Menu.Item>
               </SubMenu>
 
               <SubMenu key="EcoCategories" icon={<TableOutlined />} title="Eco Categories">
@@ -96,7 +122,7 @@ const UserDashboard = () => {
               </SubMenu>
 
               <SubMenu key="Logout" icon={<LogoutOutlined />} title="Logout">
-                <Menu.Item key="LogoutButton" onClick={() => { localStorage.removeItem('token'); history.push('/')}}>Logout </Menu.Item>
+                <Menu.Item key="LogoutButton" onClick={() => { localStorage.removeItem('token'); history.push('/') }}>Logout </Menu.Item>
 
               </SubMenu>
 
